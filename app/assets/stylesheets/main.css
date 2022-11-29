@@ -11,6 +11,11 @@
   src: url('fontawesome-webfont.woff');
 }
 
+/* @font-face {
+  font-family: 'fontawesome';
+  src: url('fontawesome-webfont.ttf');
+} */
+
 body {
   font-family: 'Roboto', sans-serif;
   background:;

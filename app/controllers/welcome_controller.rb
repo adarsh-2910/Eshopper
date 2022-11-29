@@ -1,5 +1,7 @@
 class WelcomeController < ApplicationController
     def index
+        @feature_products = Product.all rescue nil 
+        @category_product = Category.includes(:subcats).all rescue nil
     end    
 
     def blog
@@ -28,4 +30,5 @@ class WelcomeController < ApplicationController
     
     def error404
     end    
+    
 end

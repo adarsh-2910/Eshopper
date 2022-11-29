@@ -6,13 +6,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Cart | E-Shopper</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/prettyPhoto.css" rel="stylesheet">
-    <link href="css/price-range.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
-	<link href="css/responsive.css" rel="stylesheet">
+    <%= stylesheet_link_tag "application", media: "all" %>
+    <%= stylesheet_link_tag 'bootstrap.min.css' %>
+    <%= stylesheet_link_tag 'font-awesome.min.css' %>
+    <%= stylesheet_link_tag 'prettyPhoto.css' %>
+    <%= stylesheet_link_tag 'price-range.css' %>
+    <%= stylesheet_link_tag 'animate.css' %>
+    <%= stylesheet_link_tag 'main.css' %>
+    <%= stylesheet_link_tag 'responsive.css' %>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -152,7 +153,9 @@
 				</ol>
 			</div>
 			<div class="table-responsive cart_info">
+      
 				<table class="table table-condensed">
+
 					<thead>
 						<tr class="cart_menu">
 							<td class="image">Item</td>
@@ -163,85 +166,41 @@
 							<td></td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td class="cart_product">
-								<a href=""><%= image_tag("cart/one.png", alt: "")%></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-
-						<tr>
-							<td class="cart_product">
-								<a href=""><%= image_tag("cart/two.png", alt: "")%></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-						<tr>
-							<td class="cart_product">
-								<a href=""><%= image_tag("cart/three.png", alt: "")%></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-					</tbody>
+          <% @cart.each do |product| %>
+            <tbody>
+              <tr>
+                <td class="cart_product">
+                  <% if product.image.attached? %>
+                    <img src="<%= url_for(product.image) %>">
+                    <% end %>
+                  <%# <a href=""><%= image_tag("cart/one.png", alt: "")</a> %>
+                </td>
+                <td class="cart_description">
+                  <h4><%= product.short_description %></h4>
+                  <p>SKU NO. <%= product.sku %></p>
+                  <p><%= product.long_description %></p>
+                </td>
+                <td class="cart_price">
+                  <p><%= product.price %></p>
+                </td>
+                <td class="cart_quantity">
+                  <div class="cart_quantity_button">
+                    <a class="cart_quantity_up" href=""> + </a>
+                    <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
+                    <a class="cart_quantity_down" href=""> - </a>
+                  </div>
+                </td>
+                <td class="cart_total">
+                   <p><%= product.price %></p>
+                </td>
+                <td class="cart_delete">
+                  <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          <% end %>
 				</table>
+       
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
@@ -329,10 +288,13 @@
 	
 
 
-    <script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.scrollUp.min.js"></script>
-    <script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/main.js"></script>
+  <%= javascript_include_tag('jquery.js') %>
+	<%= javascript_include_tag('bootstrap.min.js') %>
+	<%= javascript_include_tag('jquery.scrollUp.min.js') %>
+	<%= javascript_include_tag('price-range.js') %>
+	<%= javascript_include_tag('jquery.prettyPhoto.js') %>
+	<%= javascript_include_tag('main.js') %>
 </body>
 </html>
+
+  

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  get 'home/index'
+  # devise_for :user_gens
   mount RailsAdmin::Engine => '//admin', as: 'rails_admin'
-  devise_for :users
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "welcome/index"
   get "welcome/blog"
@@ -12,8 +15,10 @@ Rails.application.routes.draw do
   get "welcome/product_details"
   get "welcome/shop"
   get "welcome/error404"
-  
+  resources :categories
+  post "products/add_to_cart/:id", to: "products#add_to_cart", as: "add_to_cart"
+  delete "products/remove_from_cart/:id", to: "products#remove_from_cart", as: "remove_from_cart"
 
   # Defines the root path route ("/")
-  # root "users#sign_up"
+  root "home#index"
 end

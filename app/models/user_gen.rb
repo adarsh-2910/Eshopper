@@ -1,25 +1,17 @@
-class User < ApplicationRecord
+class UserGen < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2, :github]
-  
+         :omniauthable, omniauth_providers: [:google_oauth2]
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user_email = auth.info.email.present? ? auth.info.email : "user.#{auth.uid}@gmail.com"
-      user.email = user_email
+      user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
+      user.username = auth.info.name
     end
   end
-
-  # def self.from_omniauth(access_token)
-  #   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-  #     user.email = auth.info.email
-  #     user.password = Devise.friendly_token[0, 20] 
-  #   end
-  # end    
-
 
   def self.new_with_session(params, session)
     super.tap do |user|
@@ -27,10 +19,5 @@ class User < ApplicationRecord
         user.email = data["email"] if user.email.blank?
       end
     end
-  end
-
-  def admin?
-    admin
-  end   
-         
+  end       
 end
