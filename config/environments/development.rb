@@ -75,7 +75,7 @@ Rails.application.configure do
     port:                 587,
     domain:               'localhost:3000',
     user_name:            'adarsh.shrivastav001@gmail.com',
-    password:             'adarsh8149195965',
+    password:             'yejavlywpvbfsyeg',
     authentication:       'plain',
     enable_starttls_auto: true,
     open_timeout:         5,

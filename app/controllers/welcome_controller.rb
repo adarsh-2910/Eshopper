@@ -23,6 +23,9 @@ class WelcomeController < ApplicationController
     end
     
     def product_details
+        @products = Product.all
+        @catprods = Subcat.products
+
     end
     
     def shop
@@ -30,5 +33,8 @@ class WelcomeController < ApplicationController
     
     def error404
     end    
-    
+    def catprods
+        @category = Category.all
+
+    end
 end
