@@ -185,13 +185,16 @@
                 </td>
                 <td class="cart_quantity">
                   <div class="cart_quantity_button">
-                    <a class="cart_quantity_up" href=""> + </a>
-                    <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                    <a class="cart_quantity_down" href=""> - </a>
+					<%= button_to '+', add_quantity_path(product), method: :post, remote: true, class: 'btn primary' %>                  
+					  <%# <a class="cart_quantity_up" href=""> + </a> %>
+					  <%= product.quantity%>
+					<%= button_to '-', dec_quantity_path(product), method: :post, remote: true, class: 'btn primary' %>
+                    <%# <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2"> %>
+                    <%# <a class="cart_quantity_down" href=""> - </a> %>
                   </div>
                 </td>
                 <td class="cart_total">
-                   <p><%= product.price %></p>
+                   <p><%= (product.price) * (product.quantity) %></p>
                 </td>
                 <td class="cart_delete">
                   <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
