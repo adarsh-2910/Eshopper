@@ -115,10 +115,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_141242) do
   create_table "product_details", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "subcat_id", null: false
     t.bigint "product_id", null: false
     t.index ["product_id"], name: "index_product_details_on_product_id"
-    t.index ["subcat_id"], name: "index_product_details_on_subcat_id"
   end
 
   create_table "product_images", force: :cascade do |t|
@@ -214,6 +212,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_141242) do
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
   add_foreign_key "product_details", "products"
-  add_foreign_key "product_details", "subcats"
   add_foreign_key "product_images", "products"
 end

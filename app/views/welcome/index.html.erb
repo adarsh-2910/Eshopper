@@ -243,14 +243,14 @@
 								</div>
 								<%# <div id="sportswear" class="panel-collapse collapse"> %>
 									<div class="panel-body">
-									<% @category_product.each do |category| %>
-                    <h2><%= category.name %></h2>
-                    <% subcatagories = category.subcats%>
-                      <% subcatagories.each do |subcat| %>
-                      <%= link_to subcat.subcat_name, category_path(subcat) %>
-                     <%# <a href=""><%= subcat.subcat_name %></a>
-                    <% end %>
-                  <% end %>
+									<% @category.each do |category| %>
+								<h2><%= category.name %></h2>
+								<% subcatagories = category.subcategories%>
+								<% subcatagories.each do |subcat| %>
+								<%= link_to subcat.name, product_details_path(subcat) %>
+								<%# <a href=""><%= subcat.subcat_name %></a>
+								<% end %>
+							<% end %>
 
 									</div>
 								<%# </div> %>

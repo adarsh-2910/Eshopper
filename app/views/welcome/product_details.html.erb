@@ -287,8 +287,9 @@
 				<div class="col-sm-9 padding-right">
 					<div class="product_details"><!--product_details-->
 						<div class="col-sm-5">
+							<% @products.each do |product| %>
 							<div class="view-product">
-								<%= image_tag("product_details/1.jpg", alt: "like") %>
+								<%= image_tag product.image %>
 								<%# <img src="images/product_details/1.jpg" alt="" /> %>
 								<h3>ZOOM</h3>
 							</div>
@@ -322,18 +323,18 @@
 									<i class="fa fa-angle-right"></i>
 								  </a>
 							</div>
-
+							
 						</div>
 						<div class="col-sm-7">
 							<div class="product-information"><!--/product-information-->
 								<%= image_tag("product_details/new.jpg",class: "newarrival", alt: "like") %>
 								<%# <img src="images/product_details/new.jpg" class="newarrival" alt="" /> %>
-								<h2>Anne Klein Sleeveless Colorblock Scuba</h2>
+								<h2><%= product.name %></h2>
 								<p>Web ID: 1089772</p>
 								<%= image_tag("product_details/rating.png", alt: "like") %>
 								<%# <img src="images/product_details/rating.png" alt="" /> %>
 								<span>
-									<span>US $59</span>
+									<span><%= product.price%></span>
 									<label>Quantity:</label>
 									<input type="text" value="3" />
 									<button type="button" class="btn btn-fefault cart">
@@ -348,7 +349,7 @@
 							</div><!--/product-information-->
 						</div>
 					</div><!--/product_details-->
-					
+					<% end %>
 					<div class="category-tab shop-details-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">

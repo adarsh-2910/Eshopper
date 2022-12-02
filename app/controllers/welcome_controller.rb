@@ -1,7 +1,8 @@
 class WelcomeController < ApplicationController
     def index
         @feature_products = Product.all rescue nil 
-        @category_product = Category.includes(:subcats).all rescue nil
+        # @category_product = Category.includes(:subcats).all rescue nil
+        @category = Category.all
     end    
 
     def blog
@@ -23,8 +24,8 @@ class WelcomeController < ApplicationController
     end
     
     def product_details
-        @products = Product.all
-        @catprods = Subcat.products
+        @category = Category.find(params[:id])
+        @products = @category.products
 
     end
     

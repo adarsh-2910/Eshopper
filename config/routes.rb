@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   get "welcome/checkout"
   get "welcome/contact_us"
   get "welcome/login"
-  get "welcome/product_details"
+  # get "welcome/product_details"\
+  get 'welcome/product_details/:id', to: 'welcome#product_details', as: 'product_details'
+
   get "welcome/shop"
   get "welcome/error404"
   resources :categories
