@@ -3,7 +3,20 @@ class WelcomeController < ApplicationController
         @feature_products = Product.all rescue nil 
         # @category_product = Category.includes(:subcats).all rescue nil
         @category = Category.all
+        @address = Address.all
     end    
+
+    def create
+		@address = current_user.addresses.build(address_params)
+        if @address.save
+            flash[:success] = "item successfully created!"
+            redirect_to welcome_checkout_path
+        else
+            puts "#{@address.errors.full_messages}"
+            flash.now[:error] = "item creation failed"
+            render "welcome/checkout"
+        end
+    end
 
     def blog
     end
@@ -15,6 +28,7 @@ class WelcomeController < ApplicationController
     end
     
     def checkout
+        @address = Address.new
     end
     
     def contact_us
@@ -26,7 +40,6 @@ class WelcomeController < ApplicationController
     def product_details
         @category = Category.find(params[:id])
         @products = @category.products
-
     end
     
     def shop
@@ -36,6 +49,10 @@ class WelcomeController < ApplicationController
     end    
     def catprods
         @category = Category.all
+    end
 
+    private
+    def address_params   #used in User_address
+        params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :state,:city )
     end
 end

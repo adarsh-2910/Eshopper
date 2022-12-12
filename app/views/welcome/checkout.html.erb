@@ -183,7 +183,7 @@
 				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
 			</div><!--/register-req-->
 
-			<div class="shopper-informations">
+			<%# <div class="shopper-informations">
 				<div class="row">
 					<div class="col-sm-3">
 						<div class="shopper-info">
@@ -254,7 +254,30 @@
 						</div>	
 					</div>					
 				</div>
-			</div>
+			</div> %>
+
+			<%# form %>
+			<div class="form-one">
+				<%= form_with model: @address, url: welcome_create_path, method: :post, local: true do |form| %>
+					<div class="field">
+						<%= form.label :first_Name %>  
+							<%= form.text_field :fname %>
+							<%= form.label :Last_Name %>
+							<%= form.text_field :lname %>
+							<%= form.label :address_1 %>
+							<%= form.text_field :address_1 %>
+							<%= form.label :email %>
+							<%= form.email_field :email %>
+							<%= form.label :pincode %>
+							<%= form.number_field :pincode %>
+						<%= form.select :country, options_for_select( [['India','India'],['Australia','Australia'],['United States','RASSIA'],['','AMERICA']])%>
+						<%= form.select :state, options_for_select( [['MAHARASHTRA','MAHARASHTRA'],['GOA','GOA'],['DELHI','DELHI'],['PANJAB','PUNJAB']])%>
+						<%= form.label :mobile_no %>
+						<%= form.number_field :mobile_no %>
+							<div class="actions">
+								<%= form.submit %>
+							</div>
+				<% end %>
 			<div class="review-payment">
 				<h2>Review & Payment</h2>
 			</div>

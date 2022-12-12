@@ -4,7 +4,7 @@ class AddColumnsToProduct < ActiveRecord::Migration[7.0]
     add_column :products, :sku, :varchar, :limit => 100
     add_column :products, :short_description, :varchar, :limit => 100
     add_column :products, :long_description, :text
-    add_column :products, :price, :float
+    add_column :products, :price, :decimal
     add_column :products, :special_price_from, :date
     add_column :products, :special_price_to, :date
     # add_column :products, :status, :enum

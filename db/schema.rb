@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_29_141242) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_12_100116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_141242) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "addresses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.string "address_1"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.integer "pincode"
+    t.integer "mobile_no"
   end
 
   create_table "baners", force: :cascade do |t|
@@ -132,11 +144,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_141242) do
   create_table "products", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "category_id"
     t.string "name"
     t.string "sku"
     t.string "short_description"
     t.text "long_description"
-    t.float "price"
+    t.decimal "price"
     t.date "special_price_from"
     t.date "special_price_to"
     t.integer "quantity"
@@ -145,7 +158,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_141242) do
     t.text "meta_keywords"
     t.integer "created_by"
     t.date "create_date"
-    t.integer "category_id"
   end
 
   create_table "subcats", force: :cascade do |t|
@@ -189,6 +201,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_141242) do
     t.index ["reset_password_token"], name: "index_user_gens_on_reset_password_token", unique: true
   end
 
+  create_table "user_orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "address_id"
+    t.index ["address_id"], name: "index_user_orders_on_address_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -213,4 +232,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_141242) do
   add_foreign_key "product_categories", "products"
   add_foreign_key "product_details", "products"
   add_foreign_key "product_images", "products"
+  add_foreign_key "user_orders", "addresses"
 end

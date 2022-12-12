@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "welcome/login"
   # get "welcome/product_details"\
   get 'welcome/product_details/:id', to: 'welcome#product_details', as: 'product_details'
+  post 'welcome/create',to: 'welcome#create'
 
   get "welcome/shop"
   get "welcome/error404"

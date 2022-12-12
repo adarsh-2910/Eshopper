@@ -1,7 +1,4 @@
 class ProductsController < ApplicationController
-  def index
-    @products = Product.all
-  end
 
   def add_to_cart          
     id = params[:id].to_i   #finding product id
@@ -17,6 +14,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all
+    
   end
 
   def add_quantity
@@ -31,4 +29,7 @@ class ProductsController < ApplicationController
     @item.quantity -= 1
     @item.save
   end
+
+  
+
 end
