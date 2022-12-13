@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   get 'welcome/product_details/:id', to: 'welcome#product_details', as: 'product_details'
   post 'welcome/create',to: 'welcome#create'
 
+  #for stripe
+  get 'checkout', to: "checkouts#show"
+  get 'billing', to: "billing#show"
+
   get "welcome/shop"
   get "welcome/error404"
   resources :categories

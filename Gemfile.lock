@@ -188,6 +188,8 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
+    pay (6.1.0)
+      rails (>= 6.0.0)
     pg (1.4.5)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -268,6 +270,7 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.1.1)
       railties (>= 6.0.0)
+    stripe (8.0.0)
     thor (1.2.1)
     tilt (2.0.11)
     timeout (0.3.0)
@@ -310,6 +313,7 @@ DEPENDENCIES
   omniauth-github!
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
+  pay (~> 6.0)
   pg (~> 1.1)
   pry
   puma (~> 5.0)
@@ -319,6 +323,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   stimulus-rails
+  stripe (~> 8.0)
   turbo-rails
   tzinfo-data
   web-console
