@@ -51,6 +51,18 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "devise", "~> 4.8"
+  gem 'rails_admin', '~> 3.0'
+  gem "sassc-rails"
+  gem 'pry'
+
+  gem "omniauth-google-oauth2"
+  # gem 'omniauth-github', '~> 2.0', '>= 2.0.1'
+  gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
+  gem "omniauth-rails_csrf_protection"
+
+  gem "pay", "~> 6.0"
+  gem "stripe", "~> 8.0"
 end
 
 group :development do
@@ -71,15 +83,4 @@ group :test do
   gem "webdrivers"
 end
 
-gem "devise", "~> 4.8"
-gem 'rails_admin', '~> 3.0'
-gem "sassc-rails"
-gem 'pry'
 
-gem "omniauth-google-oauth2"
-# gem 'omniauth-github', '~> 2.0', '>= 2.0.1'
-gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
-gem "omniauth-rails_csrf_protection"
-
-gem "pay", "~> 6.0"
-gem "stripe", "~> 8.0"

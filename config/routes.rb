@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   #for stripe
   get 'checkout', to: "checkouts#show"
   get 'billing', to: "billing#show"
+  post 'checkout/show'
 
   get "welcome/shop"
   get "welcome/error404"

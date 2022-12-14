@@ -25,6 +25,13 @@ class WelcomeController < ApplicationController
     end
     
     def cart
+        @product_price_lists = [] 
+		@cart.each do |product| 
+		temp = (product.quantity)*(product.price)
+		@product_price_lists << temp
+		end
+		@total_price = @product_price_lists.inject {|sum,price| sum + price}
+		@value = @total_price.to_i
     end
     
     def checkout

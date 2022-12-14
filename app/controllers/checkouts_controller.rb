@@ -1,13 +1,36 @@
 class CheckoutsController < ApplicationController
-    before_action :authenticate_user!
+  before_action :authenticate_user!
 
-    def show
-      current_user.set_payment_processor :stripe #this defines that the payment processor is stripe.
-      # current_user.customer
+  def show
+    @product_price_lists = [] 
+		@cart.each do |product| 
+		temp = (product.quantity)*(product.price)
+		@product_price_lists << temp
+		end
+		@total_price = @product_price_lists.inject {|sum,price| sum + price}
+		@value = @total_price.to_i
+    product=Stripe::Product.create({
+      name: 'Order'
+      })
+      Stripe::Price.create({
+      unit_amount: @value.to_i+100,
+      currency: 'usd',
+      product: product.id,
+      })
 
-      @checkout_session = current_user.payment_processor.checkout(
-        mode: "payment",
-        line_items: "price_1MEVqvSC7PKc8iLeJCcCDX8P" #the products that we want user to purchase
-      )
-    end
-end        
+      @session = Stripe::Checkout::Session.create({
+        payment_method_types: ['card'],
+        line_items: [
+        price_data: {
+        product: product.id,
+        unit_amount: @value.to_i*100,
+        currency: 'usd'
+      },
+      quantity: 1,
+      ],
+      mode: 'payment',
+      success_url: root_url,
+      cancel_url: root_url,
+      })
+  end
+end 

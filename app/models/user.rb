@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   # include Pay::Billable
-  pay_customer
+  pay_customer stripe_attributes: :stripe_attributes
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :github]
@@ -19,8 +19,7 @@ class User < ApplicationRecord
   #     user.password = Devise.friendly_token[0, 20] 
   #   end
   # end    
-
-
+  
   def self.new_with_session(params, session)
     super.tap do |user|
       if data = session["devise.google_oauth2"] && session["devise.google_oauth2_data"]["extra"]["raw_info"]

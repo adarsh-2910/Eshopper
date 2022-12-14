@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
 
+  
+
   def add_to_cart          
     id = params[:id].to_i   #finding product id
     session[:cart] << id unless session[:cart].include?(id)  #adding product to cart unless it is already present in shopping cart
@@ -14,7 +16,6 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all
-    
   end
 
   def add_quantity
