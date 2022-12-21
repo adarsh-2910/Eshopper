@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     def initialize_session
       session[:cart] ||= [] # empty cart = empty array session has a cart object
     end
-  
+
     def load_cart
       @cart = Product.find(session[:cart])
     end

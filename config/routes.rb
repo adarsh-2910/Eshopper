@@ -15,22 +15,31 @@ Rails.application.routes.draw do
   # get "welcome/product_details"\
   get 'welcome/product_details/:id', to: 'welcome#product_details', as: 'product_details'
   post 'welcome/create',to: 'welcome#create'
+  get 'welcome/success', to: 'welcome#success', as: "shop_success"
+  post 'welcome/create',to: 'welcome#create'
 
   #for stripe
-  get 'checkout', to: "checkouts#show"
+  get 'checkouts', to: "checkouts#show"
   get 'billing', to: "billing#show"
-  post 'checkout/show'
+  get 'checkouts/show'
+  # get 'checkouts/show'
+
 
   get "welcome/shop"
   get "welcome/error404"
   resources :categories
   post "products/add_to_cart/:id", to: "products#add_to_cart", as: "add_to_cart"
   delete "products/remove_from_cart/:id", to: "products#remove_from_cart", as: "remove_from_cart"
+  delete 'products/remove_product/:id', to: "products#remove_product", as: "remove_product"
 
+  # wishlist
+  post 'user_wish_list/new/:id', to: "user_wish_list#new", as: "new"
+  # post 'products/add_to_wishlist/:id', to: "products#add_to_wishlist", as: "add_to_wishlist"
+  delete "products/remove_from_wishlist/:id", to: "products#remove_from_wishlist", as: "remove_from_wishlist"
+  get'products/wishlist'
   post 'products/:id/add' => "products#add_quantity", as: "add_quantity"
   post 'products/:id/minus' => "products#dec_quantity", as: "dec_quantity"
-  # post 'products/:id/add' => "products#add_quantity", as: "add_quantity"
-
+  
   # Defines the root path route ("/")
-  root "home#index"
+  root "welcome#index"
 end

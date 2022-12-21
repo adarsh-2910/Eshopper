@@ -148,7 +148,7 @@
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
-				  <li><a href="#">Home</a></li>
+				  <li><a href="index.html">Home</a></li>
 				  <li class="active">Shopping Cart</li>
 				</ol>
 			</div>
@@ -173,37 +173,35 @@
                   <% if product.image.attached? %>
                     <img src="<%= url_for(product.image) %>">
                     <% end %>
+                    <h3><%= product.name %></h3>
                   <%# <a href=""><%= image_tag("cart/one.png", alt: "")</a> %>
                 </td>
                 <td class="cart_description">
-                  <h4><%= product.short_description %></h4>
-                  <p>SKU NO. <%= product.sku %></p>
-                  <p><%= product.long_description %></p>
+                  <p>Description: <%= product.short_description %></p>
+                  <%# <p>SKU NO.</p> %>
+                <p>SKU no. : <%= product.sku %></p>
                 </td>
                 <td class="cart_price">
-                  <p><%= product.price %></p>
+                  <p>US$ <%= product.price %></p>
                 </td>
                 <td class="cart_quantity">
                   <div class="cart_quantity_button">
-					<%= button_to '+', add_quantity_path(product), method: :post, remote: true, class: 'btn primary' %>                  
-					  <%# <a class="cart_quantity_up" href=""> + </a> %>
+					<%= button_to '+', add_quantity_path(product),id: :"inc" , method: :post, remote: true, data: { 'turbo-method' => :post } %>                  
 					  <%= product.quantity%>
-					<%= button_to '-', dec_quantity_path(product), method: :post, remote: true, class: 'btn primary' %>
-                    <%# <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2"> %>
-                    <%# <a class="cart_quantity_down" href=""> - </a> %>
+					<%= button_to '-', dec_quantity_path(product), method: :post, remote: true, data: { 'turbo-method' => :post } %>
                   </div>
                 </td>
                 <td class="cart_total">
-                   <p><%= (product.price) * (product.quantity) %></p>
+                   <p>US$ <%= (product.price) * (product.quantity) %></p>
                 </td>
                 <td class="cart_delete">
-                  <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+					<%= button_to "X", remove_from_cart_path(product), method: :delete %>
+                  <%# <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a> %>
                 </td>
               </tr>
             </tbody>
           <% end %>
-				</table>
-       
+				</table> 
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
@@ -272,12 +270,12 @@
 				<div class="col-sm-6">
 					<div class="total_area">
 						<ul>
-							<li>Cart Sub Total <span><%= @value %></span><span>₹<span></li>
+							<li>Cart Sub Total <span><%= @value %></span><span>US$<span></li>
 							<li>Shipping Cost <span>Free</span></li>
-							<li>Total <span><%= @value %></span><span>₹<span></li>
+							<li>Total <span><%= @value %></span><span>US$<span></li>
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>
-							<a class="btn btn-default check_out" href="">Check Out</a>
+							<li><a href="checkout.html"><i class="fa fa-shopping-cart"></i> Checkout</a></li>
 					</div>
 				</div>
 			</div>
