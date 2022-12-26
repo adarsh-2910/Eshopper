@@ -42,24 +42,20 @@ class ProductsController < ApplicationController
     @wishlists = UserWishlist.all   
   end
   
-  def add_to_wishlist
-    # binding.pry
-    user = User.all
-    id = Product.find(params[:id])
-    user_wishlist = []
-    user_wishlist <<  id 
-    # @user_wishlist = UserWishlist.find_or_create_by(product_id: id.id, user_id: id.id)
-    # if @user_wishlist.save
-    #   redirect_to root_path 
-    # end
-  end    
+  # def add_to_wishlist
+  #   # binding.pry
+  #   user = User.all
+  #   id = Product.find(params[:id])
+  #   user_wishlist = []
+  #   user_wishlist <<  id 
+  # end    
   
-  def remove_from_wishlist
-    id = Product.find(params[:id])
-    @user_wish_list = UserWishlist.find_by(product_id: id.id)
-    if @user_wish_list.destroy
-      redirect_to root_path
-    end
-  end  
+  # def remove_from_wishlist
+  #   id = Product.find(params[:id])
+  #   @user_wish_list = UserWishlist.find_by(product_id: id.id)
+  #   if @user_wish_list.destroy
+  #     redirect_to root_path
+  #   end
+  # end  
 
 end

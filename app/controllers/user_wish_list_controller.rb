@@ -9,9 +9,8 @@ class UserWishListController < ApplicationController
     puts "user_id---------------#{user_id}"
     wishlist = UserWishlist.create(user_id: user_id, product_id: product_id)
     if wishlist.save
-      redirect_to root_path, :
+      # redirect_to root_path
     else
-
     end
     puts "wishlist-------------------#{wishlist.inspect}"
   end  

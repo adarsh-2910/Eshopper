@@ -5,7 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :github]
   has_many :addresses
-  has_one :user_wishlist          
+  # has_one :user_wishlist  
+  has_many :payment_responses        
   # has_many :user_orders
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

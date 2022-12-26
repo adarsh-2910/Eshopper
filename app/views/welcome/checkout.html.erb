@@ -179,101 +179,43 @@
 				</ul>
 			</div><!--/checkout-options-->
 
+      <%# displaying user address %>
+      <div class="container" >
+        <% if @address.present? %>  
+          <h3 style="color:red"> Delivery address </h3>
+          <p>Address1: <%= @address.address_1 %></p>
+          <p>Contact no.: <%= @address.mobile_no %></p>
+          <p>State: <%= @address.state %></p>
+          <p>Country: <%= @address.country %></p>
+          <p>Zipcode: <%= @address.pincode %></p>
+        <% else %>
+          <div></div>
+        <% end %>
+      </div>
+
 			<div class="register-req">
 				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
 			</div><!--/register-req-->
 
-			<%# <div class="shopper-informations">
-				<div class="row">
-					<div class="col-sm-3">
-						<div class="shopper-info">
-							<p>Shopper Information</p>
-							<form>
-								<input type="text" placeholder="Display Name">
-								<input type="text" placeholder="User Name">
-								<input type="password" placeholder="Password">
-								<input type="password" placeholder="Confirm password">
-							</form>
-							<a class="btn btn-primary" href="">Get Quotes</a>
-							<a class="btn btn-primary" href="">Continue</a>
-						</div>
-					</div>
-					<div class="col-sm-5 clearfix">
-						<div class="bill-to">
-							<p>Bill To</p>
-							<div class="form-one">
-								<form>
-									<input type="text" placeholder="Company Name">
-									<input type="text" placeholder="Email*">
-									<input type="text" placeholder="Title">
-									<input type="text" placeholder="First Name *">
-									<input type="text" placeholder="Middle Name">
-									<input type="text" placeholder="Last Name *">
-									<input type="text" placeholder="Address 1 *">
-									<input type="text" placeholder="Address 2">
-								</form>
-							</div>
-							<div class="form-two">
-								<form>
-									<input type="text" placeholder="Zip / Postal Code *">
-									<select>
-										<option>-- Country --</option>
-										<option>United States</option>
-										<option>Bangladesh</option>
-										<option>UK</option>
-										<option>India</option>
-										<option>Pakistan</option>
-										<option>Ucrane</option>
-										<option>Canada</option>
-										<option>Dubai</option>
-									</select>
-									<select>
-										<option>-- State / Province / Region --</option>
-										<option>United States</option>
-										<option>Bangladesh</option>
-										<option>UK</option>
-										<option>India</option>
-										<option>Pakistan</option>
-										<option>Ucrane</option>
-										<option>Canada</option>
-										<option>Dubai</option>
-									</select>
-									<input type="password" placeholder="Confirm password">
-									<input type="text" placeholder="Phone *">
-									<input type="text" placeholder="Mobile Phone">
-									<input type="text" placeholder="Fax">
-								</form>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="order-message">
-							<p>Shipping Order</p>
-							<textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
-							<label><input type="checkbox"> Shipping to bill address</label>
-						</div>	
-					</div>					
-				</div>
-			</div> %>
-
 			<%# form %>
+      <h3><b style="color:red" >Add new delivery address</b></h3>
 			<div class="form-one">
 				<%= form_with model: @address, url: welcome_create_path, method: :post, local: true do |form| %>
 					<div class="field">
-						<%= form.label :first_Name %>  
-							<%= form.text_field :fname %>
+					  	<%= form.label :first_Name %>  
+							<%= form.text_field :fname %><br>
 							<%= form.label :Last_Name %>
-							<%= form.text_field :lname %>
+							<%= form.text_field :lname %><br>
 							<%= form.label :address_1 %>
-							<%= form.text_field :address_1 %>
-							<%= form.label :email %>
-							<%= form.email_field :email %>
-							<%= form.label :pincode %>
+							<%= form.text_field :address_1 %><br>
+							<%= form.label :email_id  %>
+							<%= form.email_field :email %><br>
+						  <%= form.label :pincode %>
 							<%= form.number_field :pincode %>
-              <%= form.select :country, options_for_select( [['India','India'],['Australia','Australia'],['United States','RASSIA'],['','AMERICA']])%>
-              <%= form.select :state, options_for_select( [['MAHARASHTRA','MAHARASHTRA'],['GOA','GOA'],['DELHI','DELHI'],['PANJAB','PUNJAB']])%>
+							<%= form.select :country, options_for_select( [['India','India'],['Australia','Australia'],['United States','RASSIA'],['','AMERICA']])%>
+							<%= form.select :state, options_for_select( [['MAHARASHTRA','MAHARASHTRA'],['Bihar','Bihar'],['DELHI','DELHI'],['Uttar pradesh','Uttar pradesh']])%>
               <%= form.label :mobile_no %>
-              <%= form.number_field :mobile_no %>
+							<%= form.number_field :mobile_no %>
 							<div class="actions">
 								<%= form.submit %>
 							</div>
@@ -281,11 +223,13 @@
 			<div class="review-payment">
 				<h2>Review & Payment</h2>
 			</div>
-      <span>
-			<%= button_to "Stripe", checkouts_show_path, method: :get %>
-          <%# <%= button_to "COD", welcome_success_path, method: :get %> 
+     		<span>
+		    <h4>Pay with Stripe<%= button_to "Stripe Pay", checkouts_stripe_path, method: :get %></h4>
 			</span>
-		</div>
+			<span>
+			<h4>Pay on COD<%= button_to "COD", checkouts_cod_path, method: :get %>
+			</span>
+		</div>				
 	</section> <!--/#cart_items-->
 	<footer id="footer"><!--Footer-->
 		<%= render partial: "devise/shared/footer"%>

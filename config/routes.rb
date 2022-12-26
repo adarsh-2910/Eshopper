@@ -12,17 +12,22 @@ Rails.application.routes.draw do
   get "welcome/checkout"
   get "welcome/contact_us"
   get "welcome/login"
-  # get "welcome/product_details"\
+
+  # get "welcome/product_details"
   get 'welcome/product_details/:id', to: 'welcome#product_details', as: 'product_details'
   post 'welcome/create',to: 'welcome#create'
   get 'welcome/success', to: 'welcome#success', as: "shop_success"
   post 'welcome/create',to: 'welcome#create'
 
   #for stripe
-  get 'checkouts', to: "checkouts#show"
+  get 'checkouts', to: "checkouts#stripe"
   get 'billing', to: "billing#show"
-  get 'checkouts/show'
+  get 'checkouts/stripe'
   # get 'checkouts/show'
+  get 'checkouts/cod', to: "checkouts#cod"
+  # get 'cod', to: "welcome#cod"
+  #for cod
+  # post "welcome/create", to: "welcome#create"
 
 
   get "welcome/shop"

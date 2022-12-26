@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_19_140004) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_21_091639) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,7 +47,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_140004) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.string "address_1"
-    t.string "city"
     t.string "state"
     t.string "country"
     t.integer "pincode"
@@ -184,6 +183,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_140004) do
     t.date "modify_date"
   end
 
+  create_table "payment_responses", force: :cascade do |t|
+    t.string "transaction_id"
+    t.integer "amount"
+    t.string "currency", default: "USD"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_payment_responses_on_user_id"
+  end
+
   create_table "product_attribute_values", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -244,7 +253,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_140004) do
     t.string "sku"
     t.string "short_description"
     t.text "long_description"
-    t.decimal "price"
+    t.integer "price"
     t.date "special_price_from"
     t.date "special_price_to"
     t.integer "quantity"
@@ -339,6 +348,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_140004) do
   add_foreign_key "pay_charges", "pay_subscriptions", column: "subscription_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+  add_foreign_key "payment_responses", "users"
   add_foreign_key "product_attributes_assocs", "product_attribute_values"
   add_foreign_key "product_attributes_assocs", "product_attributes"
   add_foreign_key "product_attributes_assocs", "products"
