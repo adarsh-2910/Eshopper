@@ -1,29 +1,39 @@
 class UserWishListController < ApplicationController
   
-  def new
-    puts"i m in new method"
+  def new 
     user_id =  current_user.id
-    puts params
-    product_id = params[:id]
-    puts "product_id----------#{product_id}"
-    puts "user_id---------------#{user_id}"
-    wishlist = UserWishlist.create(user_id: user_id, product_id: product_id)
-    if wishlist.save
-      # redirect_to root_path
+    product_id = Product.find(params[:id])
+    # binding.pry
+    if UserWishlist.where(product_id: product_id.id).present?
+        redirect_to root_path, notice: "item already added to wishlist"
     else
+        @user_wishlist = UserWishlist.find_or_create_by(product_id: product_id.id, user_id: user_id)
+        @user_wishlist.save
+        redirect_to root_path, notice: "item successfully added to wishlist"
     end
-    puts "wishlist-------------------#{wishlist.inspect}"
-  end  
+  end
+
     
   def create
   end
+
+  def index
+   @wish = UserWishlist.all
+  end  
+  
+
+  def remove_wishlist
+    # binding.pry
+    # puts "i m in remove wishlist********************************************"
+    user_id =  current_user.id
+    product_id = params[:id]
     
-  def destroy
-    product = params[:id].to_i
-    @wishlist = current_user.user_wishlist
-    @product_id = @wishlist.product_id
-    @product_id.delete(product)
-    @wishlist.save
-    redirect_to user_wishlist_path(@wishlist), notice: "item removed from wishlist"
-  end
+    product = Product.find(params[:id])
+    @user_wishlist = UserWishlist.find_by(product_id: product_id, user_id: user_id)
+    if @user_wishlist.destroy
+      redirect_to root_path, notice: "item successfully removed from wishlist"
+    else
+      redirect_to root_path, notice: "failed to remove from wishilst"
+    end
+ end
 end

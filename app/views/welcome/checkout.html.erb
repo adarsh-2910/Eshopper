@@ -210,11 +210,11 @@
 							<%= form.text_field :address_1 %><br>
 							<%= form.label :email_id  %>
 							<%= form.email_field :email %><br>
-						  <%= form.label :pincode %>
+						  	<%= form.label :pincode %>
 							<%= form.number_field :pincode %>
 							<%= form.select :country, options_for_select( [['India','India'],['Australia','Australia'],['United States','RASSIA'],['','AMERICA']])%>
 							<%= form.select :state, options_for_select( [['MAHARASHTRA','MAHARASHTRA'],['Bihar','Bihar'],['DELHI','DELHI'],['Uttar pradesh','Uttar pradesh']])%>
-              <%= form.label :mobile_no %>
+              				<%= form.label :mobile_no %>
 							<%= form.number_field :mobile_no %>
 							<div class="actions">
 								<%= form.submit %>

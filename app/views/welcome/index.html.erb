@@ -249,18 +249,16 @@
 									</h4>
 								</div>
 								<%# <div id="sportswear" class="panel-collapse collapse"> %>
-									<div class="panel-body">
-									<% @category.each do |category| %>
-								<h2><%= category.name %></h2>
-								<% subcatagories = category.subcategories%>
-								<% subcatagories.each do |subcat| %>
-								<%= link_to subcat.name, product_details_path(subcat) %>
-								<%# <a href=""><%= subcat.subcat_name %></a>
-								<% end %>
-							<% end %>
-
-									</div>
-								<%# </div> %>
+                <div class="panel-body">
+                  <% @category.each do |category| %>
+                    <h2><%= category.name %></h2>
+                    <% subcatagories = category.subcategories%>
+                      <% subcatagories.each do |subcat| %>
+                      <b><%= link_to subcat.name, product_details_path(subcat) %></b>
+                      <%# <a href=""><%= subcat.subcat_name %>
+                    <% end %>
+                  <% end %>
+                </div>
 							</div>
 							<div class="panel panel-default">
 								<div class="panel-heading">
@@ -371,7 +369,10 @@
                           <%= button_to "Add to cart", add_to_cart_path(product) %>
                         <% end %>
                         <%# <% if @wishlist_product_name.present? && @wishlist_product_name.include?(product) %> 
+                        <%# <% if @wishlist(product)%>
+                          <%# <%= button_to "Remove from wishlist", remove_path(product) %> 
                           <%= button_to "Add to wishlist", new_path(product) %>
+            
                           <%# <%= button_to "Remove from Wishlist", remove_from_wishlist_path(product.id), method: :delete %>	 
                           <%# <% else %> 
                           <%# <%= button_to "Add to Wishlist", add_to_wishlist_path(product) %> 
@@ -394,8 +395,6 @@
               </div> 
           <% end %>
         </div><!--features_items-->
-					
-					
 				</div>
 			</div>
 		</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_21_091639) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_27_111721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,6 +74,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_21_091639) do
   create_table "configurations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "coupon_useds", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "coupon_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_coupon_useds_on_coupon_id"
+    t.index ["user_id"], name: "index_coupon_useds_on_user_id"
   end
 
   create_table "coupons", force: :cascade do |t|
@@ -284,6 +293,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_21_091639) do
     t.string "google_token"
   end
 
+  create_table "user_coupon_useds", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "user_coupon_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_coupon_id"], name: "index_user_coupon_useds_on_user_coupon_id"
+    t.index ["user_id"], name: "index_user_coupon_useds_on_user_id"
+  end
+
+  create_table "user_coupons", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "coupon_code"
+    t.integer "percent_off"
+    t.integer "create_by"
+    t.date "created_date"
+    t.integer "modify_by"
+    t.date "modify_date"
+    t.integer "no_of_uses"
+  end
+
   create_table "user_gens", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -344,6 +374,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_21_091639) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "coupon_useds", "coupons"
+  add_foreign_key "coupon_useds", "users"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_charges", "pay_subscriptions", column: "subscription_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
@@ -356,6 +388,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_21_091639) do
   add_foreign_key "product_categories", "products"
   add_foreign_key "product_details", "products"
   add_foreign_key "product_images", "products"
+  add_foreign_key "user_coupon_useds", "user_coupons"
+  add_foreign_key "user_coupon_useds", "users"
   add_foreign_key "user_orders", "addresses"
   add_foreign_key "user_wishlists", "products"
   add_foreign_key "user_wishlists", "users"
