@@ -278,8 +278,18 @@
 					<div class="total_area">
 						<ul>
 							<li>Cart Sub Total <span><%= @value %></span><span>US$<span></li>
-							<li>Shipping Cost <span>Free</span></li>
-							<li>Total <span><%= @value %></span><span>US$<span></li>
+              
+              <% if  @final_shipping_cost.present? %>
+                <li>Shipping Cost <span><%= @final_shipping_cost %></span></li>
+              <%end%>
+
+              <% if @final_value.present? %>
+                <li>Total <span><%= @final_value %></span><span>US$<span></li>
+              <% end %>
+              <% if @total_value_coupon.present? %>
+                <li>Total after applying coupon<span><%= @total_value_coupon %></span><span>US$<span></li>
+              <% end %>
+              
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>
 							<li><a href="checkout.html"><i class="fa fa-shopping-cart"></i> Checkout</a></li>

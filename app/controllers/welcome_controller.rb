@@ -30,6 +30,9 @@ require "stripe"
   
   def blog_single
   end
+
+  def myaccount
+  end  
   
   def cart
     @product_price = [] 
@@ -38,32 +41,47 @@ require "stripe"
       @product_price << temp
     end
     @value = @product_price.inject {|sum,price| sum + price}  #o/p is in integer
+    if @value < 500
+      @shipping_cost = 50
+    else
+      @shipping_cost = 0
+    end
 
+    @final_shipping_cost = @shipping_cost
+    @final_value = @value + @final_shipping_cost    #total amount affter adding shipping address 
+    # binding.pry
     @user = current_user
     @all_coupons = UserCoupon.all
     @entered_code = params[:coupon_code]
     user_c = UserCoupon.find_by(coupon_code: @entered_code)
-    coupon_used = 0
+    # coupon_used = 0
     # binding.pry
-
+    
     @all_coupons.each do |c|
-    	if @entered_code == c.coupon_code     #checking if the coupon code is present in coupon list
+      if @entered_code == c.coupon_code     #checking if entered code matches with the record
         if @user.user_coupons.include?(user_c)   #checking if current_user have this coupon
-        render "cart", notice: "coupon code already applied"
-        puts "######################################## coupon code applied already"
-      else
-        puts "########################################valid coupon applied"
-        coupon_used = user_c.no_of_uses += 1   #incrementing that particular coupon used
-        binding.pry
-        @user.user_coupons << c                #appending that coupon in coupon used
-        @total_value = @value - UserCoupon.last.percent_off
+          render "cart", notice: "coupon code already applied"
+          puts "######################################## coupon code applied already"
+        else
+          puts "########################################valid coupon applied"
+          # binding.pry
+          user_c.no_of_uses += 1   #incrementing that particular coupon used
+          @user.user_coupons << user_c              #appending that coupon in coupon used
+          @total_value_coupon = @final_value - (@final_value*(user_c.percent_off)/100) 
+          
+          # binding.pry
         render "cart", notice: "coupon code applied successfully"
+        # binding.pry
+      
+        # binding.pry
+        
       end
       else
         # render "cart", notice: "invalid"
         puts "#########################################################invalid"
       end          
     end
+    
 	end
   
   def checkout

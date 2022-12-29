@@ -31,9 +31,10 @@ Rails.application.routes.draw do
   #coupon
   post "welcome/cart"
 
-          
+  #my account
+  post "profile/update", to: "profile#update", as: "profile_update"
   # delete "user_wish_list/remove_wishlist/:id", to:  "user_wish_list#remove_wishlist", as: "remove_wishlist"
-
+  get "welcome/myaccount"
   get "welcome/shop"
   get "welcome/error404"
   resources :categories

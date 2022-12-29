@@ -1,0 +1,19 @@
+<div>
+ <%= form_with model: @users, url: profile_update_path,method: :post, local: true do |form| %>
+  <% if user_signed_in? %>
+    <% user = current_user %>
+    <li><b>First Name</b><%= form.text_field :first_name, required: true, class: 'form-control', value:user.first_name %></li>
+    <%= form.text_field :last_name, required: true, class: 'form-control', value:user.last_name %>
+    <%= form.text_field :mobile_number, required: true, class: 'form-control', value:user.mobile_number %>
+    <%= form.text_field :email, required: true, class: 'form-control', value:user.email %>
+    <% end %>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+	<%end%>
+</div>
+
+<%# user password Change %>
+<div>
+  <button><%= link_to "Change password", edit_user_registration_path %></button>
+</div>
