@@ -7,7 +7,8 @@ class User < ApplicationRecord
   has_many :addresses
   has_one :user_wishlist  
   has_many :products, through: :user_wishlist
-  has_many :payment_responses        
+  has_many :payment_responses    
+  has_many :user_orders, :dependent => :destroy    
   ##coupon
   has_many :user_coupon_useds
   has_many :user_coupons, through: :user_coupon_useds

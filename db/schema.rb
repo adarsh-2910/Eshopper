@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_28_124827) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_29_050419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_124827) do
     t.string "country"
     t.integer "pincode"
     t.string "mobile_no"
+    t.bigint "user_order_id"
+    t.index ["user_order_id"], name: "index_addresses_on_user_order_id"
   end
 
   create_table "baners", force: :cascade do |t|
@@ -95,6 +97,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_124827) do
     t.date "create_date"
     t.integer "modify_by"
     t.date "modified_date"
+  end
+
+  create_table "order_details", force: :cascade do |t|
+    t.integer "quantity"
+    t.float "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "product_id", null: false
+    t.bigint "user_order_id", null: false
+    t.index ["product_id"], name: "index_order_details_on_product_id"
+    t.index ["user_order_id"], name: "index_order_details_on_user_order_id"
   end
 
   create_table "pay_charges", force: :cascade do |t|
@@ -312,6 +325,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_124827) do
     t.integer "modify_by"
     t.date "modify_date"
     t.integer "no_of_uses"
+    t.integer "final_price"
   end
 
   create_table "user_gens", force: :cascade do |t|
@@ -339,13 +353,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_124827) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "address_id"
+    t.bigint "user_id"
     t.string "AWB_NO"
     t.string "payment_gateway_id"
     t.integer "transaction_id"
     t.date "created_date"
-    t.decimal "grand_total", precision: 12, scale: 2
-    t.decimal "shipping_charges", precision: 12, scale: 2
+    t.integer "grand_total"
+    t.integer "shipping_charges"
     t.index ["address_id"], name: "index_user_orders_on_address_id"
+    t.index ["user_id"], name: "index_user_orders_on_user_id"
   end
 
   create_table "user_wishlists", force: :cascade do |t|
@@ -377,8 +393,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_124827) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "user_orders"
   add_foreign_key "coupon_useds", "coupons"
   add_foreign_key "coupon_useds", "users"
+  add_foreign_key "order_details", "products"
+  add_foreign_key "order_details", "user_orders"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_charges", "pay_subscriptions", column: "subscription_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
@@ -394,6 +413,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_28_124827) do
   add_foreign_key "user_coupon_useds", "user_coupons"
   add_foreign_key "user_coupon_useds", "users"
   add_foreign_key "user_orders", "addresses"
+  add_foreign_key "user_orders", "users"
   add_foreign_key "user_wishlists", "products"
   add_foreign_key "user_wishlists", "users"
 end

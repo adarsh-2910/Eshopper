@@ -7,5 +7,6 @@ class AddColumsToCoupon < ActiveRecord::Migration[7.0]
     add_column :user_coupons, :modify_by, :integer
     add_column :user_coupons, :modify_date, :Date
     add_column :user_coupons, :no_of_uses, :integer
+    add_column :user_coupons, :final_price, :integer
   end
 end

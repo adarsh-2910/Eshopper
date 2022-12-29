@@ -279,8 +279,8 @@
 						<ul>
 							<li>Cart Sub Total <span><%= @value %></span><span>US$<span></li>
               
-              <% if  @final_shipping_cost.present? %>
-                <li>Shipping Cost <span><%= @final_shipping_cost %></span></li>
+              <% if  @shipping_cost.present? %>
+                <li>Shipping Cost <span><%= @shipping_cost %></span></li>
               <%end%>
 
               <% if @final_value.present? %>

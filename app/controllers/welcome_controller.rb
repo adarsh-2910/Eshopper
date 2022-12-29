@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
 require "stripe"
+include StripeCheckout
   def index
     @feature_products = Product.all rescue nil 
     # @category_product = Category.includes(:subcats).all rescue nil
@@ -35,6 +36,7 @@ require "stripe"
   end  
   
   def cart
+    
     @product_price = [] 
     @cart.each do |product| 
       temp = (product.quantity)*(product.price)
@@ -47,8 +49,9 @@ require "stripe"
       @shipping_cost = 0
     end
 
-    @final_shipping_cost = @shipping_cost
-    @final_value = @value + @final_shipping_cost    #total amount affter adding shipping address 
+    # @final_shipping_cost = @shipping_cost
+    @final_value = @value + @shipping_cost    #total amount affter adding shipping address 
+    # checkout_session(@final_value)            #call once
     # binding.pry
     @user = current_user
     @all_coupons = UserCoupon.all
@@ -57,20 +60,23 @@ require "stripe"
     # coupon_used = 0
     # binding.pry
     
+    
     @all_coupons.each do |c|
       if @entered_code == c.coupon_code     #checking if entered code matches with the record
         if @user.user_coupons.include?(user_c)   #checking if current_user have this coupon
-          render "cart", notice: "coupon code already applied"
+          # render "cart", notice: "coupon code already applied"
           puts "######################################## coupon code applied already"
         else
           puts "########################################valid coupon applied"
           # binding.pry
           user_c.no_of_uses += 1   #incrementing that particular coupon used
           @user.user_coupons << user_c              #appending that coupon in coupon used
+          # @final = user_c.update(final_price: @total_value_coupon)
           @total_value_coupon = @final_value - (@final_value*(user_c.percent_off)/100) 
           
           # binding.pry
-        render "cart", notice: "coupon code applied successfully"
+          # binding.pry
+        # render "cart", notice: "coupon code applied successfully"
         # binding.pry
       
         # binding.pry
@@ -78,14 +84,36 @@ require "stripe"
       end
       else
         # render "cart", notice: "invalid"
+        
         puts "#########################################################invalid"
       end          
     end
-    
+    #@final_value
+    #@total_value_coupon
+    binding.pry
 	end
   
   def checkout
       # @address = Address.new
+    cart
+    product_price_lists = [] 	
+    products = Product.where(id: @cart.map(&:id))     #map { |@cart| @cart.product.id }
+    order = UserOrder.create(user_id: current_user.id)
+    # binding.pry
+    if order.save
+      products.each do |product|
+        order.order_details.create(product_id: product.id , amount: product.price ,quantity: product.quantity)
+        @total = (product.quantity)*(product.price)
+        product_price_lists << @total
+      end
+    end
+    # @final_value
+    order.grand_total = @final_value
+    order.save
+    # binding.pry
+    # stripe(order)
+    # total_price = product_price_lists.inject {|sum,price| sum + price}
+    # @value = total_price.to_i  
     @address = current_user.addresses.last
   end
   
