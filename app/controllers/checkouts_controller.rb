@@ -1,12 +1,13 @@
 class CheckoutsController < ApplicationController
   before_action :authenticate_user!
+  
 
   def stripe
     cart_amount                      #method call
     
     product=Stripe::Product.create({name: 'Order 1'})
     Stripe::Price.create({
-    unit_amount: @value*(100),
+    unit_amount: @value*(10),
     # product: {{product.id}},
     currency: 'usd',
     product: product.id,
@@ -16,7 +17,7 @@ class CheckoutsController < ApplicationController
         line_items: [
         price_data: {
         product: product.id,
-        unit_amount: @value*(100),
+        unit_amount: @value*(10),
         currency: 'usd'
       },
       quantity: 1,
@@ -26,7 +27,6 @@ class CheckoutsController < ApplicationController
       success_url: 'http://localhost:3000/welcome/success?true&session_id={CHECKOUT_SESSION_ID}',
       cancel_url: root_url,
       })
-      
     end
 
     def cart_amount

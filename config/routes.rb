@@ -19,10 +19,15 @@ Rails.application.routes.draw do
   get 'welcome/success', to: 'welcome#success', as: "shop_success"
   post 'welcome/create',to: 'welcome#create'
 
+  get "welcome/stripe", to: "welcome#stripe"
+  # get 'checkouts', to: "welcome#stripe"
+  # get 'billing', to: "billing#show"
+  # get 'checkouts/stripe'
+
   #for stripe
-  get 'checkouts', to: "checkouts#stripe"
-  get 'billing', to: "billing#show"
-  get 'checkouts/stripe'
+  # get 'checkouts', to: "checkouts#stripe"
+  # get 'billing', to: "billing#show"
+  # get 'checkouts/stripe'
   # get 'checkouts/show'
   get 'checkouts/cod', to: "checkouts#cod"
   # get 'cod', to: "welcome#cod"

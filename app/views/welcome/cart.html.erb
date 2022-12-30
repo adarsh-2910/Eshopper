@@ -230,6 +230,14 @@
                 <div class="mb-3">
                   <%= form.submit "Apply", class: "btn btn-primary" %>
                 </div>
+                <% if @f_value.present? %>
+                  <% flash.each do |type,msg| %>
+                    <div class="msg">
+                      <%= msg %>
+                    </div>
+                  <% end %>
+                <% end %>  
+                     
 							</li>
 						</ul>
 						<% end %>
@@ -283,13 +291,9 @@
                 <li>Shipping Cost <span><%= @shipping_cost %></span></li>
               <%end%>
 
-              <% if @final_value.present? %>
-                <li>Total <span><%= @final_value %></span><span>US$<span></li>
+              <% if @f_value.present? %>
+                <li>Total <span><%= @f_value %></span><span>US$<span></li>
               <% end %>
-              <% if @total_value_coupon.present? %>
-                <li>Total after applying coupon<span><%= @total_value_coupon %></span><span>US$<span></li>
-              <% end %>
-              
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>
 							<li><a href="checkout.html"><i class="fa fa-shopping-cart"></i> Checkout</a></li>
