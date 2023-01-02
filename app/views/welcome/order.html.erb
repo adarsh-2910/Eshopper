@@ -1,0 +1,12 @@
+<div>
+<h1>Order details</h1>
+<% @orders.each do |order| %>
+   <b>order_id:-<%= order.id %></b><br>
+   	<% order.products.each do |product| %>
+        <img src="<%= url_for(product.image) %>">
+   		name:<%= product.name %><br>
+   		price: USD $<%= product.price %><br>
+   		quantity:<%= product.quantity %><br><br>
+   	<% end %><br><br>	
+<% end %>
+</div>

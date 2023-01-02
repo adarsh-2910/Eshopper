@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_29_050419) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_02_052604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -104,8 +104,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_050419) do
     t.float "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "product_id", null: false
-    t.bigint "user_order_id", null: false
+    t.bigint "product_id"
+    t.bigint "user_order_id"
     t.index ["product_id"], name: "index_order_details_on_product_id"
     t.index ["user_order_id"], name: "index_order_details_on_user_order_id"
   end
@@ -353,13 +353,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_050419) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "address_id"
-    t.bigint "user_id"
     t.string "AWB_NO"
     t.string "payment_gateway_id"
     t.integer "transaction_id"
     t.date "created_date"
     t.integer "grand_total"
     t.integer "shipping_charges"
+    t.bigint "user_id"
+    t.integer "status", default: 0
+    t.string "currency", default: "USD"
     t.index ["address_id"], name: "index_user_orders_on_address_id"
     t.index ["user_id"], name: "index_user_orders_on_user_id"
   end

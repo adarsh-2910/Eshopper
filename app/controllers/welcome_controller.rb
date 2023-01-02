@@ -120,12 +120,11 @@ include StripeCheckout
         product_price_lists << @total
       end
     end
-    # @final_value
-    # @total_value_coupon
-    
+    # binding.pry
+    # @f_value
+    # @@f_value
     order.grand_total = @final_value
     order.save
-  
   end
   
   def contact_us
@@ -133,6 +132,19 @@ include StripeCheckout
   
   def login
   end
+
+
+  def track
+    # binding.pry
+    @user_order = UserOrder.find_by(id: params[:user_order_id])
+		unless @user_order.present?
+      @error = "User order not found"
+    end
+  end  
+
+  def order
+    @orders = UserOrder.all
+  end  
   
   def product_details
     @category = Category.find(params[:id]) 
