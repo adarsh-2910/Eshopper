@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get "welcome/contact_us"
   get "welcome/login"
   get "welcome/order", to: 'welcome#order'
+  
+  post 'home/mailchimp', to:'home#mailchimp', as: 'mailchimp'
 
   # get "welcome/product_details"
   get 'welcome/product_details/:id', to: 'welcome#product_details', as: 'product_details'

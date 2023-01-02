@@ -63,6 +63,8 @@ group :development, :test do
 
   gem "pay", "~> 6.0"
   gem "stripe", "~> 8.0"
+
+  gem 'MailchimpMarketing', '~> 3.0', '>= 3.0.80'
 end
 
 group :development do
