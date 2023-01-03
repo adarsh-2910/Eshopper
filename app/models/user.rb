@@ -12,6 +12,8 @@ class User < ApplicationRecord
   ##coupon
   has_many :user_coupon_useds
   has_many :user_coupons, through: :user_coupon_useds
+
+  after_create :welcome_send
   # has_many :user_orders
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -39,5 +41,10 @@ class User < ApplicationRecord
   def admin?
     admin
   end   
+
+  def welcome_send
+    UserMailer.welcome_send(self).deliver
+  end  
+
          
 end

@@ -358,11 +358,11 @@
                         <%# <img src="images/home/product1.jpg" alt="" /> %>
                         <% if product.image.attached? %>
                           <img src="<%= url_for(product.image) %>">
-                          <% end %>
-                          <h2>US$ <%= product.price %></h2>
-                          <p><%= product.short_description %></p>
-                          <p><%= product.long_description %></p>
-                          <p>sku no. <%= product.sku %></p>
+						<% end %>
+						<h2>US$ <%= product.price %></h2>
+						<p><%= product.short_description %></p>
+						<p><%= product.long_description %></p>
+						<p>sku no. <%= product.sku %></p>
                         <% if @cart.include?(product) %>
                           <%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete %>
                         <% else %>

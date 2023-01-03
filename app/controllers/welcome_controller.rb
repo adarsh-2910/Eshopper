@@ -123,7 +123,7 @@ include StripeCheckout
     # binding.pry
     # @f_value
     # @@f_value
-    order.grand_total = @final_value
+    order.grand_total = @f_value
     order.save
   end
   
