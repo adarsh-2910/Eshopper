@@ -3,6 +3,7 @@ class UserOrder < ApplicationRecord
   has_many :addresses, :dependent => :destroy
   has_many :order_details, :dependent => :destroy
   has_many :products, :through => :order_details, :dependent => :destroy
+  after_update :status_update
   # belongs_to :payment_gateway
   enum status: {
     ordered: 0,
@@ -10,10 +11,10 @@ class UserOrder < ApplicationRecord
     delivered: 2
   }
     
-  after_save :send_order_details
-
-  def send_order_details
-    UserMailer.send_order_details(self).deliver
-  end
-
+  def status_update
+    # binding.pry
+    if status == "delivered" or status == "shipped"
+      UserMailer.status_update(user,status).deliver
+    end
+  end  
 end

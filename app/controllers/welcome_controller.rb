@@ -110,15 +110,22 @@ include StripeCheckout
     cart
     @address = current_user.addresses.last
     product_price_lists = [] 	
-    products = Product.where(id: @cart.map(&:id))     #map { |@cart| @cart.product.id }
-    order = UserOrder.create(user_id: current_user.id)
-    products.each do |product|
-      order.order_details.create(product_id: product.id , amount: product.price ,quantity: product.quantity)
-      @total = (product.quantity)*(product.price)
-      product_price_lists << @total
-    end
+		products = Product.where(id: @cart.map(&:id))
+		order = UserOrder.create(user_id: current_user.id)
+		if order.save
+			products.each do |product|
+				ord = order.order_details.create(product_id: product.id, amount:product.price, quantity: product.quantity)
+				total = (product.quantity)*(product.price)
+		  	product_price_lists << total
+      end
+      UserMailer.send_order_details(current_user,order).deliver
+      UserMailer.send_order_details_admin(current_user,order).deliver
+    # UserMailer.with(order: order).send_order_details(self).deliver
+  end
+    # UserMailer.with(order: order).admin_order_email.deliver_now
+    # binding.pry
+    # @cart
     # order.save
-     
   end
   
   def contact

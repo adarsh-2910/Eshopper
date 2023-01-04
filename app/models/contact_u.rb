@@ -9,5 +9,4 @@ class ContactU < ApplicationRecord
     def contact_mail
     	UserMailer.contact_mail(self).deliver
   	end 
-
 end
