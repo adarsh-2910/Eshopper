@@ -44,7 +44,7 @@ class User < ApplicationRecord
 
   def welcome_send
     UserMailer.welcome_send(self).deliver
+    UserMailer.mail_admin(self).deliver
   end  
 
-         
 end

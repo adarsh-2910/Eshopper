@@ -112,23 +112,30 @@ include StripeCheckout
     product_price_lists = [] 	
     products = Product.where(id: @cart.map(&:id))     #map { |@cart| @cart.product.id }
     order = UserOrder.create(user_id: current_user.id)
-    # binding.pry
-    if order.save
-      products.each do |product|
-        order.order_details.create(product_id: product.id , amount: product.price ,quantity: product.quantity)
-        @total = (product.quantity)*(product.price)
-        product_price_lists << @total
-      end
+    products.each do |product|
+      order.order_details.create(product_id: product.id , amount: product.price ,quantity: product.quantity)
+      @total = (product.quantity)*(product.price)
+      product_price_lists << @total
     end
-    # binding.pry
-    # @f_value
-    # @@f_value
-    order.grand_total = @f_value
-    order.save
+    # order.save
+     
   end
   
-  def contact_us
+  def contact
+    @cont = ContactU.last
   end
+
+  def contact_us
+    @contact=ContactU.new(contact_params)
+    @cont = ContactU.last
+    if @contact.save
+      flash[:success] = "New adress successfully added!"
+      redirect_to welcome_contact_path
+    else
+      flash.now[:error] = "adress creation failed"
+      render:new
+  end
+end
   
   def login
   end
@@ -143,7 +150,7 @@ include StripeCheckout
   end  
 
   def order
-    @orders = UserOrder.all
+      @orders = current_user.user_orders.all      #current_user.user_orders
   end  
   
   def product_details
@@ -177,4 +184,8 @@ include StripeCheckout
   def address_params   #used in User_address
     params.permit(:address_1,:pincode, :mobile_no, :country, :state)
   end
+
+  def contact_params
+		params.permit(:name,:email,:contact_no,:message)
+	end
 end

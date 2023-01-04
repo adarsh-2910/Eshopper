@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   get "welcome/blog_single"
   get "welcome/cart"
   get "welcome/checkout"
-  get "welcome/contact_us"
+  get "welcome/contact"
+  post "welcome/contact_us"
+  post "welcome/contact"
+  
+
   get "welcome/login"
   get "welcome/order", to: 'welcome#order'
   
