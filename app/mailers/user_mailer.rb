@@ -44,5 +44,9 @@ class UserMailer < ApplicationMailer
     @user = user
     mail(to: user.email, subject: "Your order status has been changed")
   end  
-  
+
+  def sendmail(status)
+    @status = status
+    mail(to: 'adarsh.shrivastav001@gmail.com',subject:'Order details of user')
+  end   
 end

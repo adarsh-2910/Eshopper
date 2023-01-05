@@ -65,6 +65,8 @@ group :development, :test do
   gem "stripe", "~> 8.0"
 
   gem 'MailchimpMarketing', '~> 3.0', '>= 3.0.80'
+
+  gem 'whenever', require: false
 end
 
 group :development do
