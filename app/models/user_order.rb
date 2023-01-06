@@ -17,8 +17,5 @@ class UserOrder < ApplicationRecord
       UserMailer.status_update(user,status).deliver
     end
   end  
-  def sendmail
-    UserMailer.sendmail(order_details).deliver
-    binding.pry
-  end
+  
 end

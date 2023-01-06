@@ -45,8 +45,21 @@ class UserMailer < ApplicationMailer
     mail(to: user.email, subject: "Your order status has been changed")
   end  
 
-  def sendmail(status)
-    @status = status
-    mail(to: 'adarsh.shrivastav001@gmail.com',subject:'Order details of user')
+  def sendmail
+    @consolidated = UserOrder.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
+      count = []
+      @consolidated.each do |cd|
+          a = cd.id
+          count << a
+      end
+      @asd = count
+      
+      mail(to: "adarsh.shrivastav001@gmail.com", subject: 'consolidated mail for orders')
   end   
+  
+  def wishlistmail_admin
+    @wishlist = UserWishlist.all
+    @user = User.find_by(admin: true)
+    mail(to: @user.email, subject: 'users wishlist weekly')
+  end  
 end

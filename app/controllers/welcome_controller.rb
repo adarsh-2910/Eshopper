@@ -7,6 +7,7 @@ include StripeCheckout
     # @category_product = Category.includes(:subcats).all rescue nil
     @category = Category.where(parent_id: nil)  
     @baner = Baner.all
+    @cms = Cm.all
   end    
 
   def wishlist

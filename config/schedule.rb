@@ -22,6 +22,10 @@ env :PATH, ENV['PATH']
 
 set :output, "log/cron.log"
 
-every 3.days do
+every 1.day do
     rake 'sample:test' 
+end
+
+every 6.day do
+	rake 'wishlist:test'	
 end

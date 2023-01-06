@@ -1,0 +1,8 @@
+<% @wishlist.each do |wishlist| %>
+  <% prod = wishlist.product %>
+  <tr>
+    <td><img src="<%= url_for(prod.image) %>"><br> </td>
+    <td><h3 ><%= prod.name %></h3></td>
+    <td><p>USD $<%= prod.price %></p></td>
+  </tr>
+<% end %>
