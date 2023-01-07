@@ -121,12 +121,8 @@ include StripeCheckout
       end
       UserMailer.send_order_details(current_user,order).deliver
       UserMailer.send_order_details_admin(current_user,order).deliver
-    # UserMailer.with(order: order).send_order_details(self).deliver
-  end
-    # UserMailer.with(order: order).admin_order_email.deliver_now
-    # binding.pry
-    # @cart
-    # order.save
+    end
+    
   end
   
   def contact

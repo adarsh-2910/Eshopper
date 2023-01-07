@@ -13,6 +13,18 @@ RailsAdmin.config do |config|
     visible false
   end
 
+  config.model Report do
+    list do
+      # virtual field
+      configure :data do
+        :show
+      end
+      field :sales_report 
+      field :customer_registered
+      field :coupons_used
+    end
+  end
+
   ### Popular gems integration
 
   ## == Devise ==
