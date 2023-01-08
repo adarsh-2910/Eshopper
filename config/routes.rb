@@ -35,11 +35,9 @@ Rails.application.routes.draw do
   post "welcome/track"
 
   #for stripe
-  # get 'checkouts', to: "checkouts#stripe"
-  # get 'billing', to: "billing#show"
-  # get 'checkouts/stripe'
-  # get 'checkouts/show'
+ 
   get 'checkouts/cod', to: "checkouts#cod"
+  get 'welcome/checkout_product', to: "welcome#checkout_product"
   # get 'cod', to: "welcome#cod"
   #for cod
   # post "welcome/create", to: "welcome#create"

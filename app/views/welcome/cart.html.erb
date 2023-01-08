@@ -295,6 +295,10 @@
 							<% if @final_value.present? %>
 								<li>Total <span><%= @final_value %></span><span>US$<span></li>
 							<% end %>
+
+							<% if @f_value.present? %>
+								<li>Total discounted <span><%= @f_value %></span><span>US$<span>
+							<% end %>
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>
 							<li><a href="checkout.html"><i class="fa fa-shopping-cart"></i> Checkout</a></li>

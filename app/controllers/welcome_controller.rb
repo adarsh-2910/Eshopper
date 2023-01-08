@@ -58,33 +58,30 @@ include StripeCheckout
     user_c = UserCoupon.find_by(coupon_code: @entered_code)
     
     @all_coupons.each do |c|
-      if @entered_code == c.coupon_code   #checking if entered code matches with the record
-        if @user.user_coupons.include?(user_c)   #checking if current_user have used this coupon
-          puts "######################################## coupon code applied already"
-          flash[:message] = "Coupon already applied !"
-        else
-          user_c.no_of_uses += 1   #incrementing that particular coupon used
-          @user.user_coupons << user_c              #appending that coupon in coupon used
+      if @user.user_coupons.include?(user_c) 
+         flash[:message] = "Coupon already applied !"
+      
+      elsif @entered_code == c.coupon_code
+          user_c.no_of_uses += 1  
+          @user.user_coupons << user_c     
           @f_value = @final_value - (@final_value*(user_c.percent_off)/100)
           @@f_value = @f_value
           flash[:message] = "Coupon applied successfully!"
-        end  
-      elsif @entered_code != c.coupon_code && @entered_code.nil?
-        flash[:message] = "Invalid coupon code!"
       else
-        @f_value = @final_value
-        @@f_value = @final_value
-        flash[:message] = "Invalid coupon!"
+          @f_value = @final_value
+          @@f_value = @final_value
       end
+    end  
     end
-  end
+
+
 
   def stripe
-    cart                      #method call
-    
+    checkout_product
+    # binding.pry
     product=Stripe::Product.create({name: 'Order 1'})
     Stripe::Price.create({
-    unit_amount: @@f_value*(100),
+    unit_amount: @@f_value,
     # product: {{product.id}},
     currency: 'usd',
     product: product.id,
@@ -94,25 +91,30 @@ include StripeCheckout
         line_items: [
         price_data: {
         product: product.id,
-        unit_amount: @@f_value*(100),
+        unit_amount: @@f_value*100,
         currency: 'usd'
       },
       quantity: 1,
       ],
       mode: 'payment',
-      # success_url: shop_success_path(@session.id),
       success_url: 'http://localhost:3000/welcome/success?true&session_id={CHECKOUT_SESSION_ID}',
       cancel_url: root_url,
       })
+      
+      
     end
   
-  def checkout
-      # @address = Address.new
-    cart
-    @address = current_user.addresses.last
+    def checkout
+    end
+
+
+    def checkout_product
+    
+    amount = @@f_value
+    address = current_user.addresses.last
     product_price_lists = [] 	
 		products = Product.where(id: @cart.map(&:id))
-		order = UserOrder.create(user_id: current_user.id)
+		order = UserOrder.create(user_id: current_user.id, grand_total: amount)
 		if order.save
 			products.each do |product|
 				ord = order.order_details.create(product_id: product.id, amount:product.price, quantity: product.quantity)

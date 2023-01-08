@@ -212,7 +212,7 @@
 							<%= form.email_field :email %><br>
 						  	<%= form.label :pincode %>
 							<%= form.number_field :pincode %>
-							<%= form.select :country, options_for_select( [['India','India'],['Australia','Australia'],['United States','RASSIA'],['','AMERICA']])%>
+							<%= form.select :country, options_for_select( [['India','India'],['Australia','Australia']])%>
 							<%= form.select :state, options_for_select( [['MAHARASHTRA','MAHARASHTRA'],['Bihar','Bihar'],['DELHI','DELHI'],['Uttar pradesh','Uttar pradesh']])%>
               				<%= form.label :mobile_no %>
 							<%= form.number_field :mobile_no %>
@@ -227,7 +227,7 @@
 		    <h4>Pay with Stripe<%= button_to "Stripe Pay", welcome_stripe_path, method: :get %></h4>
 			</span>
 			<span>
-			<h4>Pay on COD<%= button_to "COD", checkouts_cod_path, method: :get %>
+			<h4>Pay on COD<%= button_to "COD", welcome_checkout_product_path, method: :get %>
 			</span>
 		</div>				
 	</section> <!--/#cart_items-->
