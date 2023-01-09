@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
     @item.save
 
     respond_to do |format|
-      format.js
+      format.js { render :layout => false }
     end
 
   end

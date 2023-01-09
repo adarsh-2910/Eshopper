@@ -1,8 +1,9 @@
 class UserOrder < ApplicationRecord
-  belongs_to :user
-  has_many :addresses, :dependent => :destroy
-  has_many :order_details, :dependent => :destroy
-  has_many :products, :through => :order_details, :dependent => :destroy
+  belongs_to :user, :dependent => :destroy
+  # belongs_to :address
+  # has_many :addresses, dependent: :destroy
+  has_many :order_details, dependent: :destroy
+  has_many :products, :through => :order_details, dependent: :destroy
   after_update :status_update
   # belongs_to :payment_gateway
   enum status: {

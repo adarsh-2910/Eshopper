@@ -51,9 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
     t.string "country"
     t.integer "pincode"
     t.string "mobile_no"
-    t.bigint "user_order_id"
     t.string "city"
-    t.index ["user_order_id"], name: "index_addresses_on_user_order_id"
   end
 
   create_table "baners", force: :cascade do |t|
@@ -381,17 +379,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
   create_table "user_orders", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "address_id"
     t.string "AWB_NO"
     t.string "payment_gateway_id"
     t.integer "transaction_id"
     t.date "created_date"
     t.integer "grand_total"
     t.integer "shipping_charges"
-    t.bigint "user_id"
     t.integer "status", default: 0
     t.string "currency", default: "USD"
-    t.index ["address_id"], name: "index_user_orders_on_address_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_user_orders_on_user_id"
   end
 
@@ -424,7 +420,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "addresses", "user_orders"
   add_foreign_key "coupon_useds", "coupons"
   add_foreign_key "coupon_useds", "users"
   add_foreign_key "order_details", "products"
@@ -443,7 +438,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
   add_foreign_key "product_images", "products"
   add_foreign_key "user_coupon_useds", "user_coupons"
   add_foreign_key "user_coupon_useds", "users"
-  add_foreign_key "user_orders", "addresses"
   add_foreign_key "user_orders", "users"
   add_foreign_key "user_wishlists", "products"
   add_foreign_key "user_wishlists", "users"

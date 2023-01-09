@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   #for stripe
  
-  get 'checkouts/cod', to: "checkouts#cod"
+  get 'welcome/cod'
   get 'welcome/checkout_product', to: "welcome#checkout_product"
   # get 'cod', to: "welcome#cod"
   #for cod

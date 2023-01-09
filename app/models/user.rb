@@ -4,10 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :github]
-  has_many :addresses
+  # has_many :addresses
   has_one :user_wishlist  
   has_many :products, through: :user_wishlist
-  has_many :payment_responses    
+  has_many :payment_responses, dependent: :destroy  
   has_many :user_orders, :dependent => :destroy    
   ##coupon
   has_many :user_coupon_useds

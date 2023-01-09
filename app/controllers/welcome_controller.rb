@@ -15,9 +15,7 @@ include StripeCheckout
   end  
 
   def create
-    binding.pry
-    @address = current_user.addresses.new(address_params)
-    binding.pry
+    @address = Address.new(address_params)
     # @address.save
     if @address.save
       flash[:success] = "address created successfully!"
@@ -30,6 +28,14 @@ include StripeCheckout
   end
 
   def blog
+    a = UserOrder.last
+    binding.pry
+    if a.destroy
+      flash[:success] = "record deleted"
+      redirect_towelcome_blog_path
+    else
+      puts "-----------------------#{a.errors.full_messages}-------------------------"
+    end
   end
   
   def blog_single
@@ -47,7 +53,7 @@ include StripeCheckout
     end
     @value = @product_price.inject {|sum,price| sum + price}  #o/p is in integer
     @value =  @value.to_i
-    if @value < 500
+    if @value < 500 && @value > 0
       @shipping_cost = 50
     else
       @shipping_cost = 0
@@ -60,7 +66,7 @@ include StripeCheckout
     
     @all_coupons.each do |c|
       if @user.user_coupons.include?(user_c) 
-         flash[:message] = "Coupon already applied !"
+         flash[:message] = "Coupon applied !"
       
       elsif @entered_code == c.coupon_code
           user_c.no_of_uses += 1  
@@ -71,11 +77,10 @@ include StripeCheckout
       else
           @f_value = @final_value
           @@f_value = @final_value
+          flash[:message] = "Apply coupon if available!"
       end
     end  
     end
-
-
 
   def stripe
     
@@ -111,19 +116,25 @@ include StripeCheckout
     def checkout_product
     
       amount = @@f_value
-      address = current_user.addresses.last
       product_price_lists = [] 	
       products = Product.where(id: @cart.map(&:id))
-      payment_gateway = "stripe"
-      order = UserOrder.create(user_id: current_user.id, grand_total: amount,payment_gateway_id: payment_gateway)
+      if @@trans == 1
+        payment_gateway = "COD"
+        trans_id = 1
+      else
+        payment_gateway = "Stripe"
+        trans_id = @@trans
+      end
+
+      order = UserOrder.create(user_id: current_user.id, grand_total: amount,payment_gateway_id: payment_gateway, transaction_id: trans_id)
       if order.save
         products.each do |product|
-          ord = order.order_details.create(product_id: product.id, amount:product.price, quantity: product.quantity)
+          order.order_details.create(product_id: product.id, amount:product.price, quantity: product.quantity)
           total = (product.quantity)*(product.price)
           product_price_lists << total
         end
-        UserMailer.send_order_details(current_user,order).deliver
-        UserMailer.send_order_details_admin(current_user,order).deliver
+        # UserMailer.send_order_details(current_user,order).deliver
+        # UserMailer.send_order_details_admin(current_user,order).deliver
       end
     end
   
@@ -142,7 +153,14 @@ include StripeCheckout
       render:new
   end
 end
-  
+
+  def cod
+    @@trans = 1
+    checkout_product
+    @value = @@f_value
+
+  end  
+    
   def login
   end
 
@@ -165,14 +183,16 @@ end
   end
   
   def success
-    checkout_product
+   
     response = Stripe::Checkout::Session.retrieve(id: params[:session_id])
     # puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#{response}"
     @trans_id = response[:payment_intent]
+    @@trans = @trans_id
     payable_amt = response[:amount_total]
     @total_amt = payable_amt/100
     amount= payable_amt/100
     @pay_response = current_user.payment_responses.create(transaction_id: response[:payment_intent], amount: amount)
+    checkout_product
     @products = Product.all
   end
 
