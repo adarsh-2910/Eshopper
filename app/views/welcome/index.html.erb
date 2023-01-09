@@ -360,7 +360,7 @@
                       <div class="productinfo text-center">
                         <%# <img src="images/home/product1.jpg" alt="" /> %>
                         <% if product.image.attached? %>
-                          <img src="<%= url_for(product.image) %>">
+                          <img src="<%= url_for(product.image) %> "style="height: 180px; width: 200px;">
 						<% end %>
 						<h2>US$ <%= product.price %></h2>
 						<p><%= product.short_description %></p>

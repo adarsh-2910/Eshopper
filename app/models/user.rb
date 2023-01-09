@@ -12,23 +12,17 @@ class User < ApplicationRecord
   ##coupon
   has_many :user_coupon_useds
   has_many :user_coupons, through: :user_coupon_useds
-
+  #email
   after_create :welcome_send
-  # has_many :user_orders
+
+
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user| #created record only if table is empty
       user_email = auth.info.email.present? ? auth.info.email : "user.#{auth.uid}@gmail.com"
       user.email = user_email
       user.password = Devise.friendly_token[0, 20]
     end
-  end
-
-  # def self.from_omniauth(access_token)
-  #   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-  #     user.email = auth.info.email
-  #     user.password = Devise.friendly_token[0, 20] 
-  #   end
-  # end    
+  end 
 
   def self.new_with_session(params, session)
     super.tap do |user|
@@ -38,9 +32,9 @@ class User < ApplicationRecord
     end
   end
 
-  def admin?
-    admin
-  end   
+  # def admin?
+  #   admin
+  # end   
 
   def welcome_send
     UserMailer.welcome_send(self).deliver

@@ -292,12 +292,10 @@
 								<li>Shipping Cost <span><%= @shipping_cost %></span></li>
 							<%end%>
 
-							<% if @final_value.present? %>
-								<li>Total <span><%= @final_value %></span><span>US$<span></li>
-							<% end %>
+							
 
 							<% if @f_value.present? %>
-								<li>Total discounted <span><%= @f_value %></span><span>US$<span>
+								<li>Total <span><%= @f_value %></span><span>US$<span>
 							<% end %>
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>

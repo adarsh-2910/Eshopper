@@ -180,17 +180,13 @@
 			</div><!--/checkout-options-->
 
       <%# displaying user address %>
-      <div class="container" >
-        <% if @address.present? %>  
+      <div class="container" > 
           <h3 style="color:red"> Delivery address </h3>
           <p>Address1: <%= @address.address_1 %></p>
           <p>Contact no.: <%= @address.mobile_no %></p>
           <p>State: <%= @address.state %></p>
           <p>Country: <%= @address.country %></p>
           <p>Zipcode: <%= @address.pincode %></p>
-        <% else %>
-          <div></div>
-        <% end %>
       </div>
 
 			<div class="register-req">

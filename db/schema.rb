@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_07_072735) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_07_072735) do
     t.integer "pincode"
     t.string "mobile_no"
     t.bigint "user_order_id"
+    t.string "city"
     t.index ["user_order_id"], name: "index_addresses_on_user_order_id"
   end
 

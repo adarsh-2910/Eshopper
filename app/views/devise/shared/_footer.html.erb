@@ -138,15 +138,20 @@
 						<div class="single-widget">
 							<h2>About Shopper</h2>
 								<%= form_with url: mailchimp_path,  local: true do |form| %>
-								<%= form.label :email %>
-								<%= form.email_field :email %>
+									<%= form.hidden_field :email, :value=> current_user.email %>
+									<%= form.hidden_field :fname, :value=> current_user.first_name %>
+									<%= form.hidden_field :lname, :value=>current_user.last_name %>
+									<%#= form.hidden_field :addr1, :value=>current_user.addresses.last.address_1 %>
+									<%#= form.hidden_field :city, :value=>current_user.addresses.last.city%>
+									<%#= form.hidden_field :state, :value=>current_user.addresses.last.state%>
+									<%#= form.hidden_field :zip, :value=>current_user.addresses.last.pincode %>
 								<div class="actions">
-								<b><%= form.submit "Subscribe" %></b>
+								<b><%= form.submit "Subscribe To Newsletter" %></b>
 								</div>
 								<% end %>
-								<%# <% flash.each do |type,msg| %> 
-									<%# <%= msg%> 
-								<%# <% end %>		 
+								<% flash.each do |msg| %>
+									<%= msg%> 
+								<% end %>		 
 
 								<p>Get the most recent updates from <br/>our site and be updated your self...</p>
 						</div>

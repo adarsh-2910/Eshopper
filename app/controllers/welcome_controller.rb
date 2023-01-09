@@ -15,8 +15,9 @@ include StripeCheckout
   end  
 
   def create
+    binding.pry
     @address = current_user.addresses.new(address_params)
-    # binding.pry
+    binding.pry
     # @address.save
     if @address.save
       flash[:success] = "address created successfully!"
@@ -45,12 +46,12 @@ include StripeCheckout
       @product_price << temp
     end
     @value = @product_price.inject {|sum,price| sum + price}  #o/p is in integer
+    @value =  @value.to_i
     if @value < 500
       @shipping_cost = 50
     else
       @shipping_cost = 0
     end
-
     @final_value = @value + @shipping_cost    #total amount affter adding shipping address 
     @user = current_user
     @all_coupons = UserCoupon.all
@@ -77,7 +78,7 @@ include StripeCheckout
 
 
   def stripe
-    checkout_product
+    
     # binding.pry
     product=Stripe::Product.create({name: 'Order 1'})
     Stripe::Price.create({
@@ -100,32 +101,31 @@ include StripeCheckout
       success_url: 'http://localhost:3000/welcome/success?true&session_id={CHECKOUT_SESSION_ID}',
       cancel_url: root_url,
       })
-      
-      
     end
   
     def checkout
+      @address = Address.last
     end
 
 
     def checkout_product
     
-    amount = @@f_value
-    address = current_user.addresses.last
-    product_price_lists = [] 	
-		products = Product.where(id: @cart.map(&:id))
-		order = UserOrder.create(user_id: current_user.id, grand_total: amount)
-		if order.save
-			products.each do |product|
-				ord = order.order_details.create(product_id: product.id, amount:product.price, quantity: product.quantity)
-				total = (product.quantity)*(product.price)
-		  	product_price_lists << total
+      amount = @@f_value
+      address = current_user.addresses.last
+      product_price_lists = [] 	
+      products = Product.where(id: @cart.map(&:id))
+      payment_gateway = "stripe"
+      order = UserOrder.create(user_id: current_user.id, grand_total: amount,payment_gateway_id: payment_gateway)
+      if order.save
+        products.each do |product|
+          ord = order.order_details.create(product_id: product.id, amount:product.price, quantity: product.quantity)
+          total = (product.quantity)*(product.price)
+          product_price_lists << total
+        end
+        UserMailer.send_order_details(current_user,order).deliver
+        UserMailer.send_order_details_admin(current_user,order).deliver
       end
-      UserMailer.send_order_details(current_user,order).deliver
-      UserMailer.send_order_details_admin(current_user,order).deliver
     end
-    
-  end
   
   def contact
     @cont = ContactU.last
@@ -165,6 +165,7 @@ end
   end
   
   def success
+    checkout_product
     response = Stripe::Checkout::Session.retrieve(id: params[:session_id])
     # puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#{response}"
     @trans_id = response[:payment_intent]
@@ -188,7 +189,7 @@ end
 
   private
   def address_params   #used in User_address
-    params.permit(:address_1,:pincode, :mobile_no, :country, :state)
+    params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :state)
   end
 
   def contact_params
