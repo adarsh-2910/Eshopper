@@ -389,8 +389,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
     t.integer "status", default: 0
     t.string "currency", default: "USD"
     t.bigint "user_id"
-    t.bigint "addresses_id"
-    t.index ["addresses_id"], name: "index_user_orders_on_addresses_id"
+    t.bigint "address_id"
+    t.index ["address_id"], name: "index_user_orders_on_address_id"
     t.index ["user_id"], name: "index_user_orders_on_user_id"
   end
 
@@ -442,7 +442,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
   add_foreign_key "product_images", "products"
   add_foreign_key "user_coupon_useds", "user_coupons"
   add_foreign_key "user_coupon_useds", "users"
-  add_foreign_key "user_orders", "addresses", column: "addresses_id"
+  add_foreign_key "user_orders", "addresses"
   add_foreign_key "user_orders", "users"
   add_foreign_key "user_wishlists", "products"
   add_foreign_key "user_wishlists", "users"

@@ -19,6 +19,16 @@
     <% if alert %>
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
+    <%= render partial: "devise/shared/header"%>
     <%= yield %>
-  </body>
+    <footer id="footer"><!--Footer-->
+		 <%= render partial: "devise/shared/footer"%>
+    </footer><!--/Footer-->
+    <%= javascript_include_tag('jquery.js') %>
+    <%= javascript_include_tag('bootstrap.min.js') %>
+    <%= javascript_include_tag('jquery.scrollUp.min.js') %>
+    <%= javascript_include_tag('price-range.js') %>
+    <%= javascript_include_tag('jquery.prettyPhoto.js') %>
+    <%= javascript_include_tag('main.js') %>
+    </body>
 </html>

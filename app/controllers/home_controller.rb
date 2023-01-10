@@ -11,7 +11,7 @@ class HomeController < ApplicationController
       :server => "us13"                  #datacenter dc
     })
     list_id = "cdd89c9809"               #uniqueid/audienceid/list_id
-    binding.pry
+    # binding.pry
     response = mailchimp.lists.add_list_member list_id, {
       email_address: params[:email],
       status: "subscribed",

@@ -11,6 +11,15 @@
   src: url('fontawesome-webfont.woff');
 }
 
+.updateprofile {
+  width: 290px;
+  margin-left: 465px;
+  border-radius: 5px;
+}
+
+.actions {
+  margin-left: 100px;
+}
 /* @font-face {
   font-family: 'fontawesome';
   src: url('fontawesome-webfont.ttf');

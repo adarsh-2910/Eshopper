@@ -39,6 +39,7 @@ class ProductsController < ApplicationController
   end
 
   def wishlist 
+    @cms = Cm.all
     @wish = UserWishlist.all   
   end
   

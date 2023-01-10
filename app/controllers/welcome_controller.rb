@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-  skip_before_action :authenticate_user!
+skip_before_action :authenticate_user!
 require "stripe"
 include StripeCheckout
 
@@ -12,6 +12,7 @@ include StripeCheckout
   end    
 
   def wishlist
+    @cms = Cm.all
     @wishlist = UserWishlist.all
   end  
 
@@ -30,11 +31,12 @@ include StripeCheckout
   end
 
   def blog
+    @cms = Cm.all
     a = UserOrder.last
-    binding.pry
+    # binding.pry
     if a.destroy
       flash[:success] = "record deleted"
-      redirect_towelcome_blog_path
+      redirect_to welcome_blog_path
     else
       puts "-----------------------#{a.errors.full_messages}-------------------------"
     end
@@ -44,10 +46,11 @@ include StripeCheckout
   end
 
   def myaccount
+    @cms = Cm.all
   end  
   
   def cart
-    
+    @cms = Cm.all
     @product_price = [] 
     @cart.each do |product| 
       temp = (product.quantity)*(product.price)
@@ -111,13 +114,13 @@ include StripeCheckout
     end
   
     def checkout
+      @cms = Cm.all
       @address = current_user.addresses.last
     end
 
 
     def checkout_product
       # binding.pry
-    
       amount = @@f_value
       product_price_lists = [] 	
       products = Product.where(id: @cart.map(&:id))
@@ -128,25 +131,29 @@ include StripeCheckout
         payment_gateway = "Stripe"
         trans_id = @@trans
       end
-      # addresses = Address.ids.last
-      binding.pry
-      order = UserOrder.create(user_id: current_user.id, grand_total: amount,payment_gateway_id: payment_gateway, transaction_id: trans_id)
+      addresses = current_user.addresses.last
+      # binding.pry
+      order = UserOrder.create(user_id: current_user.id,address_id: addresses.id, grand_total: amount,payment_gateway_id: payment_gateway, transaction_id: trans_id)
       if order.save
         products.each do |product|
           order.order_details.create(product_id: product.id, amount:product.price, quantity: product.quantity)
           total = (product.quantity)*(product.price)
           product_price_lists << total
         end
-        UserMailer.send_order_details(current_user,order).deliver
-        UserMailer.send_order_details_admin(current_user,order).deliver
+      else
+        puts "------------------------#{order.errors.full_messages}-----------------------"
+        # UserMailer.send_order_details(current_user,order).deliver
+        # UserMailer.send_order_details_admin(current_user,order).deliver
       end
     end
   
   def contact
+    @cms = Cm.all
     @cont = ContactU.last
   end
 
   def contact_us
+    @cms = Cm.all
     @contact=ContactU.new(contact_params)
     @cont = ContactU.last
     if @contact.save
@@ -155,19 +162,19 @@ include StripeCheckout
     else
       flash.now[:error] = "adress creation failed"
       render:new
+    end
   end
-end
 
   def cod
+    @cms = Cm.all
     @@trans = 1
     checkout_product
     @value = @@f_value
-
+    session[:cart] = nil
   end  
     
   def login
   end
-
 
   def track
     # binding.pry
@@ -178,16 +185,18 @@ end
   end  
 
   def order
-      @orders = current_user.user_orders.all      #current_user.user_orders
+    @cms = Cm.all
+    @orders = current_user.user_orders.all      #current_user.user_orders
   end  
   
   def product_details
+    @cms = Cm.all
     @category = Category.find(params[:id]) 
     @products = @category.products
   end
   
   def success
-   
+    @cms = Cm.all
     response = Stripe::Checkout::Session.retrieve(id: params[:session_id])
     # puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#{response}"
     @trans_id = response[:payment_intent]
@@ -198,9 +207,11 @@ end
     @pay_response = current_user.payment_responses.create(transaction_id: response[:payment_intent], amount: amount)
     checkout_product
     @products = Product.all
+    session[:cart] = nil
   end
 
   def shop
+    @cms = Cm.all
   end
   
   
@@ -208,6 +219,7 @@ end
   end    
 
   def catprods
+    @cms = Cm.all
     @category = Category.all
   end
 
