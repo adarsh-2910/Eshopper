@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   
     # POST /users or /users.json
     def create
-      binding.pry
       @user = User.new(user_params)
   
       respond_to do |format|

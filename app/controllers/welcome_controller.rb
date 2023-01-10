@@ -1,4 +1,5 @@
 class WelcomeController < ApplicationController
+  skip_before_action :authenticate_user!
 require "stripe"
 include StripeCheckout
 
@@ -15,7 +16,8 @@ include StripeCheckout
   end  
 
   def create
-    @address = Address.new(address_params)
+    # binding.pry
+    @address = current_user.addresses.new(address_params)
     # @address.save
     if @address.save
       flash[:success] = "address created successfully!"
@@ -66,24 +68,24 @@ include StripeCheckout
     
     @all_coupons.each do |c|
       if @user.user_coupons.include?(user_c) 
-         flash[:message] = "Coupon applied !"
+        flash[:message] = "Coupon already applied !"
       
       elsif @entered_code == c.coupon_code
-          user_c.no_of_uses += 1  
-          @user.user_coupons << user_c     
-          @f_value = @final_value - (@final_value*(user_c.percent_off)/100)
-          @@f_value = @f_value
-          flash[:message] = "Coupon applied successfully!"
+        user_c.no_of_uses += 1  
+        @user.user_coupons << user_c     
+        @f_value = @final_value - (@final_value*(user_c.percent_off)/100)
+        @@f_value = @f_value
+        flash[:message] = "Coupon applied successfully!"
+
       else
-          @f_value = @final_value
-          @@f_value = @final_value
-          flash[:message] = "Apply coupon if available!"
+        @f_value = @final_value
+        @@f_value = @final_value
+        flash[:message] = "Apply coupon if available!"
       end
     end  
     end
 
   def stripe
-    
     # binding.pry
     product=Stripe::Product.create({name: 'Order 1'})
     Stripe::Price.create({
@@ -109,11 +111,12 @@ include StripeCheckout
     end
   
     def checkout
-      @address = Address.last
+      @address = current_user.addresses.last
     end
 
 
     def checkout_product
+      # binding.pry
     
       amount = @@f_value
       product_price_lists = [] 	
@@ -125,7 +128,8 @@ include StripeCheckout
         payment_gateway = "Stripe"
         trans_id = @@trans
       end
-
+      # addresses = Address.ids.last
+      binding.pry
       order = UserOrder.create(user_id: current_user.id, grand_total: amount,payment_gateway_id: payment_gateway, transaction_id: trans_id)
       if order.save
         products.each do |product|
@@ -133,8 +137,8 @@ include StripeCheckout
           total = (product.quantity)*(product.price)
           product_price_lists << total
         end
-        # UserMailer.send_order_details(current_user,order).deliver
-        # UserMailer.send_order_details_admin(current_user,order).deliver
+        UserMailer.send_order_details(current_user,order).deliver
+        UserMailer.send_order_details_admin(current_user,order).deliver
       end
     end
   
@@ -209,9 +213,9 @@ end
 
   private
   def address_params   #used in User_address
-    params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :state)
+    params.permit(:address_1,:pincode, :mobile_no, :country, :state)
   end
-
+  # require(:address).
   def contact_params
 		params.permit(:name,:email,:contact_no,:message)
 	end

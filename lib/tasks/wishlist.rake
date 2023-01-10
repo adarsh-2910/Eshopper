@@ -3,5 +3,4 @@ namespace :wishlist do
   task test: :environment do
     UserMailer.wishlistmail_admin.deliver
   end
-
 end

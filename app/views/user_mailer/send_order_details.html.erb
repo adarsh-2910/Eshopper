@@ -5,20 +5,19 @@
 <p>Total amount: <%= @f_value %>
   <thead>
     <tr>
-      <th scope="col">name</th>
-      <th scope="col">price Rs.</th>
-      <th scope="col">quantity</th>
+      <th scope="col">Name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price</th>
       <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
   
   <% @order.products.each do |product| %>
-      <%# @orders.product.each do |product| %>
     <tr>
       <td><%= product.name %> <img src="<%#= url_for(product.image) %>" style="height: 130px; width: 200px;"></td>
-      <td>USD $<%= product.price %></td>
       <td><%= product.quantity %></td>
+      <td>USD $<%= product.price %></td>
       <td><%= @order.status %></td>
     </tr>
   <% end %>

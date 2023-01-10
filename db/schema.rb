@@ -45,13 +45,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
   create_table "addresses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.string "city"
     t.string "address_1"
     t.string "state"
     t.string "country"
     t.integer "pincode"
     t.string "mobile_no"
-    t.string "city"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
   create_table "baners", force: :cascade do |t|
@@ -388,6 +389,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
     t.integer "status", default: 0
     t.string "currency", default: "USD"
     t.bigint "user_id"
+    t.bigint "addresses_id"
+    t.index ["addresses_id"], name: "index_user_orders_on_addresses_id"
     t.index ["user_id"], name: "index_user_orders_on_user_id"
   end
 
@@ -420,6 +423,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "users"
   add_foreign_key "coupon_useds", "coupons"
   add_foreign_key "coupon_useds", "users"
   add_foreign_key "order_details", "products"
@@ -438,6 +442,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
   add_foreign_key "product_images", "products"
   add_foreign_key "user_coupon_useds", "user_coupons"
   add_foreign_key "user_coupon_useds", "users"
+  add_foreign_key "user_orders", "addresses", column: "addresses_id"
   add_foreign_key "user_orders", "users"
   add_foreign_key "user_wishlists", "products"
   add_foreign_key "user_wishlists", "users"
