@@ -43,6 +43,7 @@ include StripeCheckout
   end
   
   def blog_single
+    @cms = Cm.all
   end
 
   def myaccount
