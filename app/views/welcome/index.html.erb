@@ -16,7 +16,6 @@
 									<h1><span>E</span>-SHOPPER</h1>
 									<h2>Free E-Commerce Template</h2>
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
 								</div>
 								<div class="col-sm-6">
 									<% @baner.each do |baner| %>
@@ -78,165 +77,62 @@
 				<div class="col-sm-3">
 					<div class="left-sidebar">
 						<h2>Category</h2>
+						<% @category.each do |category| %>
+						<% subcatagories = category.subcategories%>
 						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
-										<%# <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+										<a data-toggle="collapse" data-parent="#accordian" href="#<%= category.id%>">
 											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-											CHECK
-										</a> %>
+											<h2><%= category.name %></h2>
+										</a>
 									</h4>
 								</div>
-								<%# <div id="sportswear" class="panel-collapse collapse"> %>
-                <div class="panel-body">
-                  <% @category.each do |category| %>
-                    <h2><%= category.name %></h2>
-                    <% subcatagories = category.subcategories%>
-                      <% subcatagories.each do |subcat| %>
-                      <b><%= link_to subcat.name, product_details_path(subcat) %></b>
-                      <%# <a href=""><%= subcat.subcat_name %>
-                    <% end %>
-                  <% end %>
-                </div>
 							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										
-									</h4>
-								</div>
-								<div id="mens" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul>
-											<li><a href="#">Fendi</a></li>
-											<li><a href="#">Guess</a></li>
-											<li><a href="#">Valentino</a></li>
-											<li><a href="#">Dior</a></li>
-											<li><a href="#">Versace</a></li>
-											<li><a href="#">Armani</a></li>
-											<li><a href="#">Prada</a></li>
-											<li><a href="#">Dolce and Gabbana</a></li>
-											<li><a href="#">Chanel</a></li>
-											<li><a href="#">Gucci</a></li>
-										</ul>
-									</div>
+							<div id="<%= category.id%>" class="panel-collapse collapse">
+								<div class="panel-body">
+									<% subcatagories.each do |subcat| %>
+									<li><%= link_to subcat.name, product_details_path(subcat) %></li>
+									<%# <a href=""><%= subcat.subcat_name %>
+									<% end %>
 								</div>
 							</div>
-							
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<%# <a data-toggle="collapse" data-parent="#accordian" href="#womens">
-											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-											Womens
-										</a> %>
-									</h4>
-								</div>
-								<div id="womens" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul>
-											<%# <li><a href="#">Fendi</a></li>
-											<li><a href="#">Guess</a></li>
-											<li><a href="#">Valentino</a></li>
-											<li><a href="#">Dior</a></li>
-											<li><a href="#">Versace</a></li> %>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<%# <h4 class="panel-title"><a href="#">Kids</a></h4> %>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<%# <h4 class="panel-title"><a href="#">Fashion</a></h4> %>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<%# <h4 class="panel-title"><a href="#">Households</a></h4> %>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<%# <h4 class="panel-title"><a href="#">Interiors</a></h4> %>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<%# <h4 class="panel-title"><a href="#">Clothing</a></h4> %>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<%# <h4 class="panel-title"><a href="#">Bags</a></h4> %>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<%# <h4 class="panel-title"><a href="#">Shoes</a></h4> %>
-								</div>
-							</div>
-						</div><!--/category-products-->				
+					
+						</div><!--/category-products-->	
+						<%end%>			
 					</div>
 				</div>
-				
-			<div class="col-sm-9 padding-right">
-        <div class="features_items"><!--features_items-->
-          <h2 class="title text-center">Features Items</h2>
-          	<% @feature_products.each do |product| %>
-              <div class="col-sm-4">
-                <div class="product-image-wrapper">
-                  <div class="single-products">
-                      <div class="productinfo text-center">
-                        <%# <img src="images/home/product1.jpg" alt="" /> %>
-                        <% if product.image.attached? %>
-                          <img src="<%= url_for(product.image) %> "style="height: 180px; width: 200px;">
-						<% end %>
-						<h2>US$ <%= product.price %></h2>
-						<p><%= product.short_description %></p>
-						<p><%= product.long_description %></p>
-						<p>sku no. <%= product.sku %></p>
-                        <% if @cart.include?(product) %>
-                          <%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete %>
-                        <% else %>
-                          <%= button_to "Add to cart", add_to_cart_path(product) %>
-                        <% end %>
-                        <%# <% if @wishlist_product_name.present? && @wishlist_product_name.include?(product) %> 
-                        <%# <% if @wishlist(product)%>
-                          <%# <%= button_to "Remove from wishlist", remove_path(product) %> 
-                          <%= button_to "Add to wishlist", new_path(product) %>
-            
-                          <%# <%= button_to "Remove from Wishlist", remove_from_wishlist_path(product.id), method: :delete %>	 
-                          <%# <% else %> 
-                          <%# <%= button_to "Add to Wishlist", add_to_wishlist_path(product) %> 
-                          <%# <% end %>   
-                      </div>
-                    <div>
-                
-                  </div>
-                  <div>
-                        
-                    </div>
-                  </div>
-                  <div class="choose">
-                    <ul class="nav nav-pills nav-justified">
-                      <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                      <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div> 
-          <% end %>
-        </div><!--features_items-->
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">Features Items</h2>
+						<% @feature_products.each do |product| %>
+						<div class="col-sm-4">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+										<div class="productinfo text-center">
+											<% if product.image.attached? %>
+												<img src="<%= url_for(product.image) %> "style="height: 180px; width: 200px;">
+											<% end %>
+											<h2>USD $<%= product.price %></h2>
+											<p><%= product.name %></p>
+											<p><%= product.short_description %></p>
+											<p><%= product.long_description %></p>
+											<% if @cart.include?(product) %>
+												<%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete %>
+											<% else %>
+												<%= button_to "Add to cart", add_to_cart_path(product) %>
+											<% end %>           
+											<%= button_to "Add to wishlist", new_path(product) %>             
+										</div>
+								</div>
+								
+							</div>
+						</div>
+						<%end%>
+					</div><!--features_items-->
 				</div>
 			</div>
 		</div>
+
 	</section>
-	
-	
-</body>
-</html>

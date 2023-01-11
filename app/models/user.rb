@@ -5,8 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :github]
   has_many :addresses
-  has_one :user_wishlist  
-  has_many :products, through: :user_wishlist
+  has_many :user_wishlists  
+  has_many :products, through: :user_wishlists
   has_many :payment_responses, dependent: :destroy  
   has_many :user_orders, :dependent => :destroy    
   ##coupon

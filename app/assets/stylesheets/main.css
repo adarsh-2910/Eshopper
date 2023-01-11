@@ -11,10 +11,70 @@
   src: url('fontawesome-webfont.woff');
 }
 
+.track_order{
+  width: 250px;
+  margin-left: 40%;
+  margin-top: -50px;
+   padding-top: 11px;
+  padding-bottom: 25px;
+}
+
 .updateprofile {
   width: 290px;
   margin-left: 465px;
   border-radius: 5px;
+}
+
+#l{
+  background-color: #FE980F;
+  color: black;
+}
+
+.grouping_button{
+  margin-left: 40%;
+  margin-left: 36%;
+  padding-top: 11px;
+  padding-bottom: 25px;
+  color: #000;
+}
+
+.sign_up_page {
+  /* border-style: solid; */
+  width: 250px;
+  margin-left: 40%;
+  margin-top: -50px;
+}
+
+#sign_up_button{
+  margin-left: 50px
+}
+
+.user_login{
+  width: 250px;
+  margin-left: 40%;
+  margin-top: -50px;
+}
+
+#log_in_button{
+  margin-left: 50px;
+  margin-bottom: 32px;
+}
+
+#reset_pass{
+  margin-bottom: 32px;
+  margin-left: -36px;
+}
+
+.password_forgot{
+  width: 250px;
+  margin-left: 40%;
+  margin-top: -50px;
+}
+
+.other_sign_up{
+  margin-left: 40%;
+  color:#FE980F;
+  margin-bottom: 36px;
 }
 
 .actions {
@@ -51,6 +111,7 @@ a {
   -moz-transition: 300ms;
     -o-transition: 300ms;
     transition: 300ms;
+    color: #000;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -200,6 +261,7 @@ a#scrollUp i{
 .btn-group.open .dropdown-toggle {
   background: rgba(0, 0, 0, 0);
   box-shadow: none;
+  
 }
 
 .dropdown-menu  li  a:hover, .dropdown-menu  li  a:focus {

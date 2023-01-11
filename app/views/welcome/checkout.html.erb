@@ -17,6 +17,7 @@
             <p>Address1: <%= @address.address_1 %></p>
             <p>Contact no.: <%= @address.mobile_no %></p>
             <p>State: <%= @address.state %></p>
+			<p>City: <%= @address.city%>
             <p>Country: <%= @address.country %></p>
             <p>Zipcode: <%= @address.pincode %></p>
         <% else %>
@@ -45,6 +46,7 @@
 						  	<%= form.label :pincode %>
 							<%= form.number_field :pincode %>
 							<%= form.select :country, options_for_select( [['India','India'],['Australia','Australia']])%>
+							<%= form.select :city, options_for_select( [['Kalyan','kalyan'],['Dombivali','Dombivali']])%>
 							<%= form.select :state, options_for_select( [['MAHARASHTRA','MAHARASHTRA'],['Bihar','Bihar'],['DELHI','DELHI'],['Uttar pradesh','Uttar pradesh']])%>
               				<%= form.label :mobile_no %>
 							<%= form.number_field :mobile_no %>

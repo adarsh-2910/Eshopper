@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
-skip_before_action :authenticate_user!
+before_action :authenticate_user! , except: [:index]
+# validates :first_name, presence: { message: 'name should be present' }
 require "stripe"
 include StripeCheckout
 
@@ -71,8 +72,8 @@ include StripeCheckout
     user_c = UserCoupon.find_by(coupon_code: @entered_code)
     
     @all_coupons.each do |c|
-      if @user.user_coupons.include?(user_c) 
-        flash[:message] = "Coupon already applied !"
+      if @user.user_coupons.include?(user_c)
+        flash[:message] = "Coupon invalid or already applied!"
       
       elsif @entered_code == c.coupon_code
         user_c.no_of_uses += 1  
@@ -175,14 +176,20 @@ include StripeCheckout
   end  
     
   def login
+    
   end
 
   def track
     # binding.pry
-    @user_order = UserOrder.find_by(id: params[:user_order_id])
-		unless @user_order.present?
-      @error = "User order not found"
+    order = current_user.user_orders.all
+    order_id = params[:user_order_id]
+    # binding.pry
+    if order.include?(order_id)
+      @user_order = UserOrder.find_by(id: params[:user_order_id])
+    else
+      flash[:notice] = "please enter correct user id "
     end
+		
   end  
 
   def order
@@ -226,9 +233,9 @@ include StripeCheckout
 
   private
   def address_params   #used in User_address
-    params.permit(:address_1,:pincode, :mobile_no, :country, :state)
+    params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
   end
-  # require(:address).
+  # .
   def contact_params
 		params.permit(:name,:email,:contact_no,:message)
 	end

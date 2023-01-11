@@ -99,42 +99,8 @@
 							</li>
 							
 						</ul>
-						<ul class="user_info">
-							<li class="single_field">
-								<label>Country:</label>
-								<select>
-									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
-								</select>
-								
-							</li>
-							<li class="single_field">
-								<label>Region / State:</label>
-								<select>
-									<option>Select</option>
-									<option>Dhaka</option>
-									<option>London</option>
-									<option>Dillih</option>
-									<option>Lahore</option>
-									<option>Alaska</option>
-									<option>Canada</option>
-									<option>Dubai</option>
-								</select>
-							
-							</li>
-							<li class="single_field zip-field">
-								<label>Zip Code:</label>
-								<input type="text">
-							</li>
-						</ul>
-						<a class="btn btn-default update" href="">Get Quotes</a>
-						<a class="btn btn-default check_out" href="">Continue</a>
+						
+						
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -146,32 +112,20 @@
 								<li>Shipping Cost <span><%= @shipping_cost %></span></li>
 							<%end%>
 
-							
 
 							<% if @f_value.present? %>
 								<li>Total <span><%= @f_value %></span><span>US$<span>
 							<% end %>
 						</ul>
-							<a class="btn btn-default update" href="">Update</a>
-							<li><a href="checkout.html"><i class="fa fa-shopping-cart"></i> Checkout</a></li>
+							
+							<a href="checkout.html", style="padding: 40px;"><i class="fa fa-shopping-cart"></i> Checkout</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section><!--/#do_action-->
 
-	<footer id="footer"><!--Footer-->
-		<%= render partial: "devise/shared/footer"%>		
-	</footer><!--/Footer-->
 	
-
-
-  <%= javascript_include_tag('jquery.js') %>
-	<%= javascript_include_tag('bootstrap.min.js') %>
-	<%= javascript_include_tag('jquery.scrollUp.min.js') %>
-	<%= javascript_include_tag('price-range.js') %>
-	<%= javascript_include_tag('jquery.prettyPhoto.js') %>
-	<%= javascript_include_tag('main.js') %>
 </body>
 </html>
 
