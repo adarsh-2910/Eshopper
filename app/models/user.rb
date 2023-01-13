@@ -14,7 +14,10 @@ class User < ApplicationRecord
   has_many :user_coupons, through: :user_coupon_useds
   #email
   after_create :welcome_send
-
+  #validations
+  validates :first_name, format: { with: /\A[a-zA-Z]+\z/,message: "only letters are allowed" }
+  validates :last_name, format: { with: /\A[a-zA-Z]+\z/,message: "only letters are allowed" }
+  validates :email, presence: { message: 'email field cannot be empty' }
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user| #created record only if table is empty

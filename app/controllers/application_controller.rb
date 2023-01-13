@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
       @cart = Product.find(session[:cart])
       # binding.pry
     end
+    
     def set_cms
       @cms = Cm.all
     end

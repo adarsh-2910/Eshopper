@@ -1,12 +1,44 @@
-<div>
-<h1>Order details</h1>
-<% @orders.each do |order| %>
-   <b>order_id:-<%= order.id %></b><br>
-   	<% order.products.each do |product| %>
-        <img src="<%= url_for(product.image) %>">
-   		name:<%= product.name %><br>
-   		price: USD $<%= product.price %><br>
-   		quantity:<%= product.quantity %><br><br>
-   	<% end %><br><br>	
-<% end %>
-</div>
+<h1 style="text-align:center">MY ORDERS</h1>
+	<section id="cart_items">
+		<div class="container">
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Product image</td>
+							<td class="description">Product name</td>
+							<td class="price">Price</td>
+							<td class="price">Quantity</td>
+							<td class="price">Order id</td>
+						</tr>
+					</thead>
+          <%# @cart.each do |product| %>
+		      <% @orders.each do |order| %>
+            <% order.products.each do |product| %>
+              <tbody>
+                <tr>
+                  <td class="cart_product">
+                    <img src="<%= url_for(product.image) %>">
+                  </td>
+                  <td class="cart_description">
+                   <b><%= product.name %><b>
+                  </td>
+                  <td class="cart_price">
+                   <b>USD $<%= product.price %><b>
+                  </td>
+                  <td class="cart_price">
+                   <b><%= product.quantity %></b>
+                  </td>
+                  <td class="cart_price">
+                    <b>ID: <%= order.id %></b>
+                  </td>
+                </tr>
+              </tbody>
+            <% end %>
+          <% end %>  
+				</table> 
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
+
+

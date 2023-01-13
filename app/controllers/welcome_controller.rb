@@ -67,27 +67,46 @@ include StripeCheckout
     end
     @final_value = @value + @shipping_cost    #total amount affter adding shipping address 
     @user = current_user
-    @all_coupons = UserCoupon.all
-    @entered_code = params[:coupon_code]
-    user_c = UserCoupon.find_by(coupon_code: @entered_code)
+    # @all_coupons = UserCoupon.all
+    # @entered_code = params[:coupon_code]
     
-    @all_coupons.each do |c|
-      if @user.user_coupons.include?(user_c)
-        flash[:message] = "Coupon invalid or already applied!"
-      
-      elsif @entered_code == c.coupon_code
-        user_c.no_of_uses += 1  
-        @user.user_coupons << user_c     
-        @f_value = @final_value - (@final_value*(user_c.percent_off)/100)
-        @@f_value = @f_value
-        flash[:message] = "Coupon applied successfully!"
+    user_c = UserCoupon.find_by(coupon_code: params[:coupon_code])
+    
+      # @all_coupons.each do |c|
+      #   if @user.user_coupons.include?(user_c)
+      #     # flash[:message] = "Coupon invalid or already applied!"
+      #     flash.now[:notice] = "already applied!"
+          
+      #   elsif @entered_code == c.coupon_code
+      #     user_c.no_of_uses += 1  
+      #     @user.user_coupons << user_c     
+      #     @f_value = @final_value - (@final_value*(user_c.percent_off)/100)
+      #     @@f_value = @f_value
+      #     flash[:message] = "Coupon applied successfully!"
 
-      else
+      #   elsif @entered_code != c.coupon_code
+      #     flash.now[:notice] = "Coupon invalid"
+
+      #   else
+      #     @f_value = @final_value
+      #     @@f_value = @final_value
+      #   end
+      # end 
+
+      if params[:coupon_code].nil?
         @f_value = @final_value
         @@f_value = @final_value
-        flash[:message] = "Apply coupon if available!"
+      elsif user_c.nil?
+        flash.now[:notice] = "Coupon invalid"
+      elsif @user.user_coupons.include?(user_c)
+        flash.now[:notice] = "already applied!"
+      else
+        user_c.no_of_uses += 1
+        @user.user_coupons << user_c
+        @f_value = @final_value - (@final_value*(user_c.percent_off)/100)
+        @@f_value = @f_value
+        flash.now[:notice] = "Coupon applied successfully!"
       end
-    end  
     end
 
   def stripe
@@ -133,9 +152,10 @@ include StripeCheckout
         payment_gateway = "Stripe"
         trans_id = @@trans
       end
+
       addresses = current_user.addresses.last
-      # binding.pry
-      order = UserOrder.create(user_id: current_user.id,address_id: addresses.id, grand_total: amount,payment_gateway_id: payment_gateway, transaction_id: trans_id)
+      
+      order = UserOrder.create(user_id: current_user.id,address_id: addresses.id, grand_total: amount,payment_gateway_id: payment_gateway, transaction_id: trans_id )
       if order.save
         products.each do |product|
           order.order_details.create(product_id: product.id, amount:product.price, quantity: product.quantity)
@@ -144,8 +164,8 @@ include StripeCheckout
         end
       else
         puts "------------------------#{order.errors.full_messages}-----------------------"
-        # UserMailer.send_order_details(current_user,order).deliver
-        # UserMailer.send_order_details_admin(current_user,order).deliver
+        UserMailer.send_order_details(current_user,order).deliver
+        UserMailer.send_order_details_admin(current_user,order).deliver
       end
     end
   
@@ -159,7 +179,7 @@ include StripeCheckout
     @contact=ContactU.new(contact_params)
     @cont = ContactU.last
     if @contact.save
-      flash[:success] = "New adress successfully added!"
+      flash.now[:notice] = "New adress successfully added!"
       redirect_to welcome_contact_path
     else
       flash.now[:error] = "adress creation failed"
@@ -168,7 +188,6 @@ include StripeCheckout
   end
 
   def cod
-    @cms = Cm.all
     @@trans = 1
     checkout_product
     @value = @@f_value
@@ -176,18 +195,13 @@ include StripeCheckout
   end  
     
   def login
-    
   end
 
   def track
     # binding.pry
-    order = current_user.user_orders.all
-    order_id = params[:user_order_id]
-    # binding.pry
-    if order.include?(order_id)
-      @user_order = UserOrder.find_by(id: params[:user_order_id])
-    else
-      flash[:notice] = "please enter correct user id "
+    @user_order = UserOrder.find_by(id: params[:user_order_id])
+		unless @user_order.present?
+      @error = "To track order enter valid order id"
     end
 		
   end  
@@ -235,7 +249,7 @@ include StripeCheckout
   def address_params   #used in User_address
     params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
   end
-  # .
+  #require(:address)
   def contact_params
 		params.permit(:name,:email,:contact_no,:message)
 	end

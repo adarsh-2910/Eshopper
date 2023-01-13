@@ -1,16 +1,58 @@
-<body>
-  <% @wish.each do |wishlist| %>
-    <% product = wishlist.product %>
-      <tr>
-        <td>
-          <img src="<%= url_for(product.image) %>">
-        </td>
-        <td>  
-          <h3><%= product.name %> <%= product.price %></h3>
-        </td>
-        <td>
-          <%= button_to "X", remove_wishlist_path(product), method: :delete %>            
-        </td>
-      </tr>
-  <% end %>
-</body>
+<h1 style="text-align:center">MY Wishlists</h1>
+	<section id="cart_items">
+		<div class="container">
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Product Image</td>
+							<td class="image">Product Name</td>
+							<td class="price">Product Price</td>
+							<td class="price">Remove from wishlist</td>
+						</tr>
+					</thead>
+          <%# @cart.each do |product| %>
+          <% @wish.each do |wishlist| %>
+            <% product = wishlist.product %>
+              <tbody>
+                <tr>
+                  <td class="cart_product">
+                    <img src="<%= url_for(product.image) %>">
+                  </td>
+                  <td class="cart_description">
+                      <h3><%= product.name %></h3> 
+                  </td>
+                  <td class="cart_price">
+                    <b>US$ <%= product.price %></b>
+                  </td>
+                   <td class="cart_price">
+                    <%= button_to "X", remove_wishlist_path(product), method: :delete %>
+                  </td>
+                </tr>
+              </tbody>
+          <% end %>  
+				</table> 
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

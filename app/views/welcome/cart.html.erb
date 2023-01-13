@@ -1,12 +1,6 @@
 
 	<section id="cart_items">
 		<div class="container">
-			<div class="breadcrumbs">
-				<ol class="breadcrumb">
-				  <li><a href="index.html">Home</a></li>
-				  <li class="active">Shopping Cart</li>
-				</ol>
-			</div>
 			<div class="table-responsive cart_info">
       
 				<table class="table table-condensed">
@@ -74,51 +68,37 @@
 								<%# <input type="checkbox">      
 								<label>Use Coupon Code</label> %>
                 <%= form_with model: @coupon, url: welcome_cart_path,  local: true,data: { turbo: false } do |form| %>
-	            <ul class="user_option">
-	            <li>
-		          <div class="mb-3">
-                <%= form.label :coupon_code %>
-                <%= form.text_field :coupon_code, class: "form-control" , placeholder: "enter coupon code" %>
-		          </div>
-							</li>
-							<li>
-                <div class="mb-3">
-                  <%= form.submit "Apply", class: "btn btn-primary" %>
-                </div>
-                <% if @f_value.present? %>
-                  <% flash.each do |type,msg| %>
-                    <div class="msg">
-                      <%= msg %>
-                    </div>
-                  <% end %>
-                <% end %>  
-                     
+									<ul class="user_option">
+										<li>
+											<div class="mb-3">
+												<%= form.label :coupon_code %>
+												<%= form.text_field :coupon_code, class: "form-control" , placeholder: "enter coupon code" %>
+											</div>
+										</li>
+										<li>
+											<div class="mb-3">
+												<%= form.submit "Apply", class: "btn btn-primary" %>
+											</div>
+											 
+										</li>
+									</ul>
+								<% end %>
 							</li>
 						</ul>
-						<% end %>
-							</li>
-							
-						</ul>
-						
-						
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="total_area">
 						<ul>
 							<li>Cart Sub Total <span><%= @value %></span><span>US$<span></li>
-				
 							<% if  @shipping_cost.present? %>
-								<li>Shipping Cost <span><%= @shipping_cost %></span></li>
+								<li>Shipping Cost <span><%= @shipping_cost %></span>US$</li>
 							<%end%>
-
-
 							<% if @f_value.present? %>
 								<li>Total <span><%= @f_value %></span><span>US$<span>
 							<% end %>
 						</ul>
-							
-							<a href="checkout.html", style="padding: 40px;"><i class="fa fa-shopping-cart"></i> Checkout</a>
+						<a href="checkout.html", style="padding: 40px;"><i class="fa fa-shopping-cart"></i> Checkout</a>
 					</div>
 				</div>
 			</div>

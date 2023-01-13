@@ -373,16 +373,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_171819) do
   create_table "user_orders", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "AWB_NO"
-    t.string "payment_gateway_id"
-    t.integer "transaction_id"
-    t.date "created_date"
-    t.integer "grand_total"
-    t.integer "shipping_charges"
     t.integer "status", default: 0
     t.string "currency", default: "USD"
     t.bigint "user_id"
     t.bigint "address_id"
+    t.string "payment_gateway_id"
+    t.string "transaction_id"
+    t.integer "grand_total"
+    t.string "shipping_method", default: "Regular shipping"
     t.index ["address_id"], name: "index_user_orders_on_address_id"
     t.index ["user_id"], name: "index_user_orders_on_user_id"
   end

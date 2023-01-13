@@ -17,7 +17,7 @@ class UserWishListController < ApplicationController
   end
 
   def index
-   @wish = UserWishlist.all
+   @wish = current_user.user_wishlists.all
   end  
 
   def remove_wishlist
@@ -26,7 +26,7 @@ class UserWishListController < ApplicationController
     user_id =  current_user.id
     product_id = params[:id]
     product = Product.find(params[:id])
-    binding.pry
+    # binding.pry
     @user_wishlist = UserWishlist.find_by(product_id: product_id, user_id: user_id)
     if @user_wishlist.destroy
       redirect_to products_wishlist_path, notice: "item successfully removed from wishlist"

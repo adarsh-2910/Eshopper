@@ -1,17 +1,17 @@
 <div class="updateprofile">
-<h1 id="l" style=" padding: 14px; padding-left: 35px;"> Edit Account</h1>
- <%= form_with model: @users, url: profile_update_path,method: :post, local: true do |form| %>
-  <% if user_signed_in? %>
-    <% user = current_user %>
-    <b>First Name</b><%= form.text_field :first_name, required: true, class: 'form-control', value:user.first_name %>
-    <b>Last Name</b><%= form.text_field :last_name, required: true, class: 'form-control', value:user.last_name %>
-    <b>Mobile no.</b><%= form.text_field :mobile_number, required: true, class: 'form-control', value:user.mobile_number %>
-    <b>Email</b><%= form.text_field :email, required: true, class: 'form-control', value:user.email %></li>
-    <% end %><br>
-    <div class="actions">
-      <%= form.submit value = "UPDATE" %>
-    </div>
-	<%end%>
+  <h1 id="l" style=" padding: 14px; padding-left: 35px;"> Edit Account</h1>
+  <%= form_with model: @users, url: profile_update_path,method: :post, local: true do |form| %>
+    <% if user_signed_in? %>
+      <% user = current_user %>
+      <b>First Name</b><%= form.text_field :first_name, required: true, class: 'form-control', value:user.first_name %>
+      <b>Last Name</b><%= form.text_field :last_name, required: true, class: 'form-control', value:user.last_name %>
+      <b>Mobile no.</b><%= form.text_field :mobile_number, required: true, class: 'form-control', value:user.mobile_number %>
+      <b>Email</b><%= form.text_field :email, required: true, class: 'form-control', value:user.email %></li>
+      <% end %><br>
+      <div class="actions">
+        <%= form.submit value = "UPDATE" %>
+      </div>
+  <%end%>
 </div>
 <div class="grouping_button">
   <div class="btn-group">

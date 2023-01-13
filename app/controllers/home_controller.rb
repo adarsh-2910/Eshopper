@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   end
 
   def mailchimp
-    binding.pry
+    # binding.pry
     mailchimp = MailchimpMarketing::Client.new()
     mailchimp.set_config({
       :api_key => "c8653bb20730e6d2db806ec1554c0a27",
@@ -27,7 +27,7 @@ class HomeController < ApplicationController
         },
       },
     }
-    binding.pry
-  flash[:message] = "Subscribed"
+    # binding.pry
+  flash.now[:message] = "Subscribed"
   end
 end
