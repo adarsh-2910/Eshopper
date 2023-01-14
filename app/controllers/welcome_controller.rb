@@ -170,20 +170,22 @@ include StripeCheckout
     end
   
   def contact
-    @cms = Cm.all
-    @cont = ContactU.last
+    # binding.pry
+    @contact=ContactU.new
+    @cont = current_user.contact_us.last
   end
 
   def contact_us
-    @cms = Cm.all
-    @contact=ContactU.new(contact_params)
+    # binding.pry
+    @user= current_user
+    @contact= @user.contact_us.new(contact_params)
     @cont = ContactU.last
     if @contact.save
-      flash.now[:notice] = "New adress successfully added!"
+      flash.now[:notice] = "Customer contacted !"
       redirect_to welcome_contact_path
     else
-      flash.now[:error] = "adress creation failed"
-      render:new
+      flash.now[:error] = "failed"
+      render:contact
     end
   end
 
@@ -251,6 +253,6 @@ include StripeCheckout
   end
   #require(:address)
   def contact_params
-		params.permit(:name,:email,:contact_no,:message)
+		params.require(:contact_u).permit(:name,:email,:contact_no,:message)
 	end
 end

@@ -30,9 +30,13 @@
 		<div class="form-one">
       <input type="submit" name="Change" value="Add Address" onclick = "document.getElementById('my_id').style.display = 'block';">
         <div id="my_id", style="display:none">
-          <%= form_with model: @address, url: welcome_create_path, method: :post, local: true do |form| %>
+          <%= form_with model: @address, url: welcome_create_path, method: :post, local: true do |form| %><br>
             <div class="field">
-            <%= form.label :first_Name %> 
+
+            <%= form.text_field :name, class:"form-control",placeholder:"Name", value: ""%><br>
+
+
+            <%= form.label :first_Name %>
             <%= form.text_field :fname %><br>
             <%= form.label :Last_Name %>
             <%= form.text_field :lname %><br>

@@ -12,6 +12,8 @@ class User < ApplicationRecord
   ##coupon
   has_many :user_coupon_useds
   has_many :user_coupons, through: :user_coupon_useds
+
+  has_many :contact_us
   #email
   after_create :welcome_send
   #validations

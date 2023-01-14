@@ -5,25 +5,24 @@
       <%= image_tag("shop/cont.jpeg", alt: "contact us") %>
     </div>
     
-    <div class="col-md-2">
-			<%= form_with model: @contact, url: welcome_contact_path,method: :post, data: {turbo: false} do |form| %>
-      <%# <% binding.pry %>
-        <%# if form.object.errors.any? %>
+    <div class="col-md-3">
+			<%= form_with model: @contact, url: welcome_contact_us_path,method: :post, data: {turbo: false} do |form| %>
+          <%# binding.pry %>
+        <% if form.object.errors.any? %>
           <div class="alert alert-danger">
-            <% form.object.errors.full_messages_for(:name).each do |msg| %>
-            <div><%= msg %></div>
-            <%#end %>
+            <% form.object.errors.full_messages.each do |msg| %>
+              <div><%= msg %></div>
+            <% end %>
           </div>
         <% end %>
+
+
         <div class="field">
-    			<%= form.label :name %><br>
-					<%= form.text_field :name %><br>
-					<%= form.label :email %><br>
-					<%= form.email_field :email %><br>
-					<%= form.label :contact_no %><br>
-					<%= form.text_field :contact_no %><br>
-					<%= form.label :message_to_admin %><br>
-					<%= form.text_field :message %><br>
+					<%= form.text_field :name, class:"form-control",placeholder:"Name", value: ""%><br>
+          <%= form.text_field :email, class:"form-control",placeholder:"Email" %><br>
+			    <%= form.number_field :contact_no, class:"form-control",placeholder:"Contact Number", pattern: "[1-9]{1}[0-9]{9}" %><br>
+          <%= form.text_area :message, class:"form-control",placeholder:"Write msg to admin" %>
+					
 					<div class="btn btn-primary">
     			<%= form.submit "send" %>
   				</div>
@@ -32,13 +31,9 @@
     </div>  
     <div class="col-md-4">
       <div class="title text-center">
-        
-          <%# <li>Name:= @cont.name</li> %>
-          <%# <li>Email:= @cont.email</li> %>
-          <%# <li>Contact_no:= @cont.contact_no</li> %>
-          <%# <li>Message:= @cont.message</li> %>
-          <b>Reply from admin to you: <%= @cont.note_admin %> </b>
-      
+      <% if @cont.present? %>
+        <b style="color:red;">Reply from admin to you: <i><%= @cont.note_admin %> </b></i>
+      <%end %>
       </div>  
     </div>
   </div>

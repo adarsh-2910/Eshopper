@@ -19,7 +19,7 @@ class UserMailer < ApplicationMailer
   def contact_update_mail(contact_info)
     @contact_info = contact_info
     @user = User.find_by(email: contact_info.email)
-    mail(to: @user.email, subject:'contact form updated!')
+    # mail(to: @user.email, subject:'contact form updated!')
   end
 
   def contact_mail(user)

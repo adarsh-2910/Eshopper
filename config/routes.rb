@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   get "welcome/checkout"
   get "welcome/contact"
   post "welcome/contact_us"
-  post "welcome/contact"
 
   get "welcome/login"
   get "welcome/order", to: 'welcome#order'
