@@ -1,4 +1,5 @@
 class WelcomeController < ApplicationController
+@@f_value = 0
 before_action :authenticate_user! , except: [:index]
 # validates :first_name, presence: { message: 'name should be present' }
 require "stripe"
@@ -13,7 +14,6 @@ include StripeCheckout
   end    
 
   def wishlist
-    @cms = Cm.all
     @wishlist = UserWishlist.all
   end  
 
@@ -52,7 +52,8 @@ include StripeCheckout
   end  
   
   def cart
-    @cms = Cm.all
+    # binding.pry
+    product = Product.all
     @product_price = [] 
     @cart.each do |product| 
       temp = (product.quantity)*(product.price)
@@ -67,32 +68,8 @@ include StripeCheckout
     end
     @final_value = @value + @shipping_cost    #total amount affter adding shipping address 
     @user = current_user
-    # @all_coupons = UserCoupon.all
-    # @entered_code = params[:coupon_code]
     
     user_c = UserCoupon.find_by(coupon_code: params[:coupon_code])
-    
-      # @all_coupons.each do |c|
-      #   if @user.user_coupons.include?(user_c)
-      #     # flash[:message] = "Coupon invalid or already applied!"
-      #     flash.now[:notice] = "already applied!"
-          
-      #   elsif @entered_code == c.coupon_code
-      #     user_c.no_of_uses += 1  
-      #     @user.user_coupons << user_c     
-      #     @f_value = @final_value - (@final_value*(user_c.percent_off)/100)
-      #     @@f_value = @f_value
-      #     flash[:message] = "Coupon applied successfully!"
-
-      #   elsif @entered_code != c.coupon_code
-      #     flash.now[:notice] = "Coupon invalid"
-
-      #   else
-      #     @f_value = @final_value
-      #     @@f_value = @final_value
-      #   end
-      # end 
-
       if params[:coupon_code].nil?
         @f_value = @final_value
         @@f_value = @final_value
@@ -200,10 +177,13 @@ include StripeCheckout
   end
 
   def track
-    # binding.pry
-    @user_order = UserOrder.find_by(id: params[:user_order_id])
-		unless @user_order.present?
-      @error = "To track order enter valid order id"
+    order = current_user.user_orders.all
+    id = params[:user_order_id].to_i
+    # binding.pry    
+		if (order.ids).include?(id) 
+      @user_order = UserOrder.find_by(id: id)
+    elsif id != 0 && (order.ids).include?(id) == false   #if we convert nil to integer we get 0 so wrote 0 instead of nil
+      flash[:alert] = "incorrect order id"
     end
 		
   end  
@@ -249,7 +229,7 @@ include StripeCheckout
 
   private
   def address_params   #used in User_address
-    params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
+    params.permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
   end
   #require(:address)
   def contact_params

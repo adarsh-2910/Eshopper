@@ -7,7 +7,6 @@
     
     <div class="col-md-3">
 			<%= form_with model: @contact, url: welcome_contact_us_path,method: :post, data: {turbo: false} do |form| %>
-          <%# binding.pry %>
         <% if form.object.errors.any? %>
           <div class="alert alert-danger">
             <% form.object.errors.full_messages.each do |msg| %>

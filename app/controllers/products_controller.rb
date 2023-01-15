@@ -23,8 +23,15 @@ class ProductsController < ApplicationController
     @item.save
 
     respond_to do |format|
+      
       format.js { render :layout => false }
     end
+    # render turbo_stream:
+    # binding.pry
+    #   turbo_stream.replace('quantity',
+    #     partial: 'products/quantity',
+    #     locals: { quantity: product.quantity }
+    #   )
 
   end
 

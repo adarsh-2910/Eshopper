@@ -34,8 +34,9 @@
                 </td>
                 <td class="cart_quantity">
                   <div class="cart_quantity_button">
-                    <%= button_to '+', add_quantity_path(product),id: :"inc" , method: :post, remote: true, data: { 'turbo-method' => :post } %>                  
-                      <%= product.quantity%>
+                    <%= button_to '+', add_quantity_path(product),id: :"inc" , method: :post,  data: { 'turbo-method' => :post } %>                  
+                      <%= product.quantity %>
+					  <%#= render "products/quantity", quantity: quantity %>
                     <%= button_to '-', dec_quantity_path(product), method: :post, remote: true, data: { 'turbo-method' => :post } %>
                   </div>
                 </td>
@@ -90,9 +91,9 @@
 				<div class="col-sm-6">
 					<div class="total_area">
 						<ul>
-							<li>Cart Sub Total <span><%= @value %></span><span>US$<span></li>
+							<li>Cart Sub Total <span><%= @value %></span><span> US$</span></li>
 							<% if  @shipping_cost.present? %>
-								<li>Shipping Cost <span><%= @shipping_cost %></span>US$</li>
+								<li>Shipping Cost <span><%= @shipping_cost %></span><span> US$</span></li>
 							<%end%>
 							<% if @f_value.present? %>
 								<li>Total <span><%= @f_value %></span><span>US$<span>

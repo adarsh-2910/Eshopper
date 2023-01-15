@@ -32,10 +32,7 @@
         <div id="my_id", style="display:none">
           <%= form_with model: @address, url: welcome_create_path, method: :post, local: true do |form| %><br>
             <div class="field">
-
-            <%= form.text_field :name, class:"form-control",placeholder:"Name", value: ""%><br>
-
-
+            
             <%= form.label :first_Name %>
             <%= form.text_field :fname %><br>
             <%= form.label :Last_Name %>
