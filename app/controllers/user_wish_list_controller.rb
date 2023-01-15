@@ -5,7 +5,7 @@ class UserWishListController < ApplicationController
     product_id = Product.find(params[:id])
     # binding.pry
     if UserWishlist.where(product_id: product_id.id).present?
-        redirect_to welcome_wishlist_path, notice: "item already added to wishlist"
+        redirect_to products_wishlist_path, notice: "item already added to wishlist"
     else
         @user_wishlist = UserWishlist.find_or_create_by(product_id: product_id.id, user_id: user_id)
         @user_wishlist.save

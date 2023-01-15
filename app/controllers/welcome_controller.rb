@@ -2,8 +2,8 @@ class WelcomeController < ApplicationController
 @@f_value = 0
 before_action :authenticate_user! , except: [:index]
 # validates :first_name, presence: { message: 'name should be present' }
-require "stripe"
-include StripeCheckout
+# require "stripe"
+# include StripeCheckout
 
   def index
     @feature_products = Product.all rescue nil 
@@ -229,7 +229,7 @@ include StripeCheckout
 
   private
   def address_params   #used in User_address
-    params.permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
+    params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
   end
   #require(:address)
   def contact_params

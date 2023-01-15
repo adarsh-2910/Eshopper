@@ -10,8 +10,8 @@ class User < ApplicationRecord
   has_many :payment_responses, dependent: :destroy  
   has_many :user_orders, :dependent => :destroy    
   ##coupon
-  has_many :user_coupon_useds
-  has_many :user_coupons, through: :user_coupon_useds
+  has_many :user_coupon_useds, :dependent => :destroy
+  has_many :user_coupons, through: :user_coupon_useds, :dependent => :destroy
 
   has_many :contact_us
   #email

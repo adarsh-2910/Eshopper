@@ -59,7 +59,6 @@ Rails.application.routes.draw do
   delete "user_wish_list/remove_wishlist/:id", to:  "user_wish_list#remove_wishlist", as: "remove_wishlist"
   get'products/wishlist'
 
-  # post 'products/add_to_wishlist/:id', to: "products#add_to_wishlist", as: "add_to_wishlist"
   # delete "products/remove_from_wishlist/:id", to: "products#remove_from_wishlist", as: "remove_from_wishlist"
   post 'products/:id/add' => "products#add_quantity", as: "add_quantity"
   post 'products/:id/minus' => "products#dec_quantity", as: "dec_quantity"

@@ -45,13 +45,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_13_110919) do
   create_table "addresses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "city"
     t.string "address_1"
     t.string "state"
     t.string "country"
     t.integer "pincode"
     t.string "mobile_no"
     t.bigint "user_id"
+    t.string "city"
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
