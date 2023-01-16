@@ -28,6 +28,6 @@ class HomeController < ApplicationController
       },
     }
     # binding.pry
-  flash.now[:message] = "Subscribed"
+  flash[:notice] = "Subscribed"
   end
 end

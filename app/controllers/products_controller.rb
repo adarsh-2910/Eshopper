@@ -23,8 +23,7 @@ class ProductsController < ApplicationController
     @item.save
 
     respond_to do |format|
-      
-      format.js { render :layout => false }
+      format.js   
     end
     # render turbo_stream:
     # binding.pry
@@ -48,6 +47,5 @@ class ProductsController < ApplicationController
   def wishlist 
     @wish = UserWishlist.all   
   end
-  
- 
+   
 end

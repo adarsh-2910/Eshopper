@@ -1,13 +1,10 @@
 class WelcomeController < ApplicationController
+# load_and_authorize_resource :through => :current_user
 @@f_value = 0
 before_action :authenticate_user! , except: [:index]
-# validates :first_name, presence: { message: 'name should be present' }
-# require "stripe"
-# include StripeCheckout
 
   def index
     @feature_products = Product.all rescue nil 
-    # @category_product = Category.includes(:subcats).all rescue nil
     @category = Category.where(parent_id: nil)  
     @baner = Baner.all
     @cms = Cm.all
@@ -44,11 +41,10 @@ before_action :authenticate_user! , except: [:index]
   end
   
   def blog_single
-    @cms = Cm.all
   end
 
   def myaccount
-    @cms = Cm.all
+
   end  
   
   def cart
@@ -112,7 +108,6 @@ before_action :authenticate_user! , except: [:index]
     end
   
     def checkout
-      @cms = Cm.all
       @address = current_user.addresses.last
     end
 
@@ -189,18 +184,15 @@ before_action :authenticate_user! , except: [:index]
   end  
 
   def order
-    @cms = Cm.all
     @orders = current_user.user_orders.all      #current_user.user_orders
   end  
   
   def product_details
-    @cms = Cm.all
     @category = Category.find(params[:id]) 
     @products = @category.products
   end
   
   def success
-    @cms = Cm.all
     response = Stripe::Checkout::Session.retrieve(id: params[:session_id])
     # puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#{response}"
     @trans_id = response[:payment_intent]
@@ -215,7 +207,6 @@ before_action :authenticate_user! , except: [:index]
   end
 
   def shop
-    @cms = Cm.all
   end
   
   
@@ -229,7 +220,7 @@ before_action :authenticate_user! , except: [:index]
 
   private
   def address_params   #used in User_address
-    params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
+    params.permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
   end
   #require(:address)
   def contact_params

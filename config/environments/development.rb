@@ -33,6 +33,14 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # config.authorize_with do |controller|
+  #   if current_user.nil?
+  #     redirect_to main_app.new_account_session_path, flash: {error: 'Please Login to Continue..'}
+  #   elsif !current_user.admin?
+  #     redirect_to main_app.root_path, flash: {error: 'You are not Admin!'}
+  #   end
+  # end
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
