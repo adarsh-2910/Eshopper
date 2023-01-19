@@ -1,7 +1,7 @@
 
 	
 	<section id="slider"><!--slider-->
-		<div class="container">
+		<div class="container fix">
 			<div class="row">
 				<div class="col-sm-12">
 					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
@@ -120,7 +120,7 @@
 											<p><%= product.long_description %></p>
 											<div style="display:flex;">
 											
-											<div style="margin-left: 32px;>
+											<div style="margin-left: 32px">
 												<%= button_to add_to_cart_path(product) do %>
 													<i class="fa fa-shopping-cart" style="font-size:36px"></i>
 												<% end %>

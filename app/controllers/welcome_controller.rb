@@ -14,14 +14,11 @@ before_action :authenticate_user! , except: [:index]
   end  
 
   def create
-    # binding.pry
     @address = current_user.addresses.new(address_params)
-    # @address.save
     if @address.save
       flash[:success] = "address created successfully!"
       redirect_to welcome_checkout_path
     else
-      # puts "#{@address.errors.full_messages}"
       flash.now[:error] = "address not created"
       render "welcome/checkout"
     end
@@ -29,7 +26,6 @@ before_action :authenticate_user! , except: [:index]
 
   def blog
     a = UserOrder.last
-    # binding.pry
     if a.destroy
       flash[:success] = "record deleted"
       redirect_to welcome_blog_path
@@ -45,7 +41,6 @@ before_action :authenticate_user! , except: [:index]
   end  
   
   def cart
-    # binding.pry
     product = Product.all
     @product_price = [] 
     @cart.each do |product| 
@@ -70,7 +65,6 @@ before_action :authenticate_user! , except: [:index]
         flash.now[:notice] = "Coupon invalid"
       elsif @user.user_coupons.include?(user_c)
         flash.now[:notice] = "already applied!"
-
       else
         user_c.no_of_uses += 1
         @user.user_coupons << user_c
@@ -81,11 +75,9 @@ before_action :authenticate_user! , except: [:index]
     end
 
   def stripe
-    # binding.pry
     product=Stripe::Product.create({name: 'Order 1'})
     Stripe::Price.create({
     unit_amount: @@f_value,
-    # product: {{product.id}},
     currency: 'usd',
     product: product.id,
     })
@@ -109,9 +101,7 @@ before_action :authenticate_user! , except: [:index]
       @address = current_user.addresses.last
     end
 
-
     def checkout_product
-      # binding.pry
       amount = @@f_value
       product_price_lists = [] 	
       products = Product.where(id: @cart.map(&:id))
@@ -133,20 +123,17 @@ before_action :authenticate_user! , except: [:index]
           product_price_lists << total
         end
       else
-        puts "------------------------#{order.errors.full_messages}-----------------------"
         UserMailer.send_order_details(current_user,order).deliver
         UserMailer.send_order_details_admin(current_user,order).deliver
       end
     end
   
   def contact
-    # binding.pry
     @contact=ContactU.new
     @cont = current_user.contact_us.last
   end
 
   def contact_us
-    # binding.pry
     @user= current_user
     @contact= @user.contact_us.new(contact_params)
     @cont = ContactU.last
@@ -171,13 +158,11 @@ before_action :authenticate_user! , except: [:index]
   def track
     order = current_user.user_orders.all
     id = params[:user_order_id].to_i
-    # binding.pry    
 		if (order.ids).include?(id) 
       @user_order = UserOrder.find_by(id: id)
     elsif id != 0 && (order.ids).include?(id) == false   #if we convert nil to integer we get 0 so wrote 0 instead of nil
       flash[:alert] = "incorrect order id"
     end
-		
   end  
 
   def order
@@ -191,7 +176,6 @@ before_action :authenticate_user! , except: [:index]
   
   def success
     response = Stripe::Checkout::Session.retrieve(id: params[:session_id])
-    # puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#{response}"
     @trans_id = response[:payment_intent]
     @@trans = @trans_id
     payable_amt = response[:amount_total]
@@ -205,7 +189,6 @@ before_action :authenticate_user! , except: [:index]
 
   def shop
   end
-  
   
   def error404
   end    

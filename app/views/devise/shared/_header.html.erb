@@ -24,10 +24,10 @@
 </head><!--/head-->
 
 <body>
-	<div class="header_position">
+	<div class="header_position fixx">
 		<header id="header"><!--header-->
 			<div class="header_top"><!--header_top-->
-				<div class="container">
+				<div class="container ">
 					<div class="row">
 						<div class="col-sm-6">
 							
@@ -51,7 +51,16 @@
 						<div class="col-sm-8">
 							<div class="shop-menu pull-right">
 								<ul class="nav navbar-nav">
-									<li><%= link_to "Account", welcome_myaccount_path %></li>
+
+
+										<li class="dropdown"><%= link_to "Account", welcome_myaccount_path %>
+										<ul role="menu" class="sub-menu">
+											<li  style="color:red;"><%= link_to "My order", welcome_order_path,:class=>"subaccount" %></li><br>
+											<li><%= link_to "Track Order", welcome_track_path,:class=>"subaccount" %></li>
+										</ul>
+										</li> 
+
+			
 
 									<li><%= link_to products_wishlist_path do %>
 										<i class="fa fa-heart-o" style="font-size:36px;color:red"></i>

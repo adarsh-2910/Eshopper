@@ -1,8 +1,8 @@
+<section class="fix">
 <% if @wish.present?%>
-<h1 style="text-align:center">MY Wishlists</h1>
 
 	<section id="cart_items">
-		<div class="container">
+		<div class="container fix">
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
 					<thead>
@@ -19,7 +19,7 @@
               <tbody>
                 <tr>
                   <td class="cart_product">
-                    <img src="<%= url_for(product.image) %>">
+                    <img src="<%= url_for(product.image) %>"style="height: 80px; width: 70px;">
                   </td>
                   <td class="cart_description">
                       <h3><%= product.name %></h3> 
@@ -42,6 +42,7 @@
 	<%= image_tag("home/empty_wishlist.png", alt: "", class: "girl img-responsive") %>
 	</div>
 <% end %>
+</section>
 
 
 

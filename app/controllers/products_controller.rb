@@ -17,7 +17,6 @@ class ProductsController < ApplicationController
   end
 
   def add_quantity
-    # binding.pry
     @item = Product.find(params[:id])
     @item.quantity += 1
     @item.save
@@ -25,13 +24,6 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.js   
     end
-    # render turbo_stream:
-    # binding.pry
-    #   turbo_stream.replace('quantity',
-    #     partial: 'products/quantity',
-    #     locals: { quantity: product.quantity }
-    #   )
-
   end
 
   def dec_quantity
@@ -51,7 +43,5 @@ class ProductsController < ApplicationController
   def show
     @feature_products = Product.all rescue nil 
     @category = Category.where(parent_id: nil)  
-
   end  
-   
 end

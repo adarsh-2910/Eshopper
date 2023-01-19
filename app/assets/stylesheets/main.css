@@ -21,6 +21,30 @@
   margin-bottom: 100px;
 }
 
+.subaccount{
+  background-color: rgb(102,102,102) !important; 
+  color: white;
+}
+
+.shop_button{
+  margin-left: 36%;
+  margin-bottom: 60px;
+  background-color: #FE980F;
+  color: black;
+}
+
+.fixx{
+  position:fixed;
+  background-color: white !important;
+  z-index: 9999;
+  width: 100%;
+  
+}
+
+.fix{
+  padding-top: 200px;
+}
+
 .thumbnaill{
   height: 30px;
   width: 30px;

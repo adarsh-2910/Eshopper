@@ -14,6 +14,14 @@ RailsAdmin.config do |config|
     visible false
   end
 
+  config.model 'Configuration' do
+    visible false
+  end
+
+  config.model 'PaymentGateway' do
+    visible false
+  end
+
   config.model Report do
     list do
       # virtual field
