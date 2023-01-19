@@ -11,6 +11,22 @@
   src: url('fontawesome-webfont.woff');
 }
 
+/* fixed_header */
+.header_position{
+  position: sticky;
+  /* padding-bottom: 30px; */
+}
+
+.index_content{
+  margin-bottom: 100px;
+}
+
+.thumbnaill{
+  height: 30px;
+  width: 30px;
+  margin-left: 25px;
+}
+
 .field{
   width: 338px;
 }

@@ -1,5 +1,4 @@
 class WelcomeController < ApplicationController
-# load_and_authorize_resource :through => :current_user
 @@f_value = 0
 before_action :authenticate_user! , except: [:index]
 
@@ -11,7 +10,7 @@ before_action :authenticate_user! , except: [:index]
   end    
 
   def wishlist
-    @wishlist = UserWishlist.all
+    @wishlist = current_user.user_wishlists.all
   end  
 
   def create
@@ -29,7 +28,6 @@ before_action :authenticate_user! , except: [:index]
   end
 
   def blog
-    @cms = Cm.all
     a = UserOrder.last
     # binding.pry
     if a.destroy
@@ -44,7 +42,6 @@ before_action :authenticate_user! , except: [:index]
   end
 
   def myaccount
-
   end  
   
   def cart
@@ -69,10 +66,11 @@ before_action :authenticate_user! , except: [:index]
       if params[:coupon_code].nil?
         @f_value = @final_value
         @@f_value = @final_value
-      elsif user_c.nil?
+      elsif user_c.nil?        #if entered code is invalid
         flash.now[:notice] = "Coupon invalid"
       elsif @user.user_coupons.include?(user_c)
         flash.now[:notice] = "already applied!"
+
       else
         user_c.no_of_uses += 1
         @user.user_coupons << user_c
@@ -153,8 +151,7 @@ before_action :authenticate_user! , except: [:index]
     @contact= @user.contact_us.new(contact_params)
     @cont = ContactU.last
     if @contact.save
-      flash.now[:notice] = "Customer contacted !"
-      redirect_to welcome_contact_path
+      redirect_to welcome_contact_path, notice: "Contacted to Eshopper's admin"
     else
       flash.now[:error] = "failed"
       render:contact
@@ -220,7 +217,7 @@ before_action :authenticate_user! , except: [:index]
 
   private
   def address_params   #used in User_address
-    params.permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
+    params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
   end
   #require(:address)
   def contact_params

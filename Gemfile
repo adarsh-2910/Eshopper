@@ -69,6 +69,9 @@ group :development, :test do
 
   gem 'whenever', require: false
   gem 'cancancan'
+
+  gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+
 end
 
 group :development do

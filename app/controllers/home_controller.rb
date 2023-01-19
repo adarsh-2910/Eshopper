@@ -28,6 +28,11 @@ class HomeController < ApplicationController
       },
     }
     # binding.pry
-  flash[:notice] = "Subscribed"
+  flash.now[:notice] = "Subscribed"
+  rescue MailchimpMarketing::ApiError => e
+  # binding.pry
+  flash[:notice] = "user allready exists"
+  puts "Error: #{e}"
+
   end
 end

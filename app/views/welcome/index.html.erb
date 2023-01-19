@@ -19,10 +19,10 @@
 								</div>
 								<div class="col-sm-6">
 									<% @baner.each do |baner| %>
-                        <% if baner.image.attached? %>
-                          <img src="<%= url_for(baner.image) %>">
-                        <% end %>
-                  <% end %>      
+								<% if baner.image.attached? %>
+									<img src="<%= url_for(baner.image) %>">
+									<% end %>
+								<% end %>      
 									<%= image_tag("home/pricing.png" ,class: "pricing", alt: "") %>
 								</div>
 							</div>
@@ -84,7 +84,7 @@
 								<div class="panel-heading">
 									<h6 class="panel-title">
 										<a data-toggle="collapse" data-parent="#accordian" href="#<%= category.id%>">
-											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+											<span class="badge pull-right"><i class="fa fa-caret-square-o-down" style="font-size:24px"></i></i></span>
 											<h2><%= category.name %></h2>
 										</a>
 									</h6>
@@ -112,21 +112,28 @@
 								<div class="single-products">
 										<div class="productinfo text-center">
 											<% if product.image.attached? %>
-												<img src="<%= url_for(product.image) %> "style="height: 180px; width: 200px;">
+												<img src="<%= url_for(product.image) %> "style="height: 180px; width: 200px;" >
 											<% end %>
 											<h2>USD $<%= product.price %></h2>
 											<p><%= product.name %></p>
 											<p><%= product.short_description %></p>
 											<p><%= product.long_description %></p>
-											<% if @cart.include?(product) %>
-												<%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete %>
-											<% else %>
-												<%= button_to "Add to cart", add_to_cart_path(product) %>
-											<% end %>           
-											<%= button_to "Add to wishlist", new_path(product) %>             
+											<div style="display:flex;">
+											
+											<div style="margin-left: 32px;>
+												<%= button_to add_to_cart_path(product) do %>
+													<i class="fa fa-shopping-cart" style="font-size:36px"></i>
+												<% end %>
+											</div>	
+											
+											<div style="margin-left: 98px;">
+												<%= button_to new_path(product) do %>
+													<i class="fa fa-heart-o" style="font-size:36px;color:red"></i>
+												<% end %>
+											</div>			
+											</div>          
 										</div>
 								</div>
-								
 							</div>
 						</div>
 						<%end%>

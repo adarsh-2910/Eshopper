@@ -27,10 +27,11 @@
 										<span style="margin-left: -88px;">US$ <%= product.price%></span>
 									
 									<% if @cart.include?(product) %>
-                          <%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete %>
+                          <%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete , id: "l" %>
                         <% else %>
-                          <%= button_to "Add to cart", add_to_cart_path(product) %>
+                          <%= button_to "Add to cart", add_to_cart_path(product), id: "l" %>
                         <% end %>
+						<%= button_to "Add to wishlist", new_path(product), id: "l" %>
 								</span>
 								<p><b>Availability:</b> In Stock</p>
 								<p><b>Condition:</b> New</p>

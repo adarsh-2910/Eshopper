@@ -1,6 +1,7 @@
 <div class="updateprofile">
   <h1 id="l" style=" padding: 14px; padding-left: 35px;"> Edit Account</h1>
   <%= form_with model: @users, url: profile_update_path,method: :post, local: true do |form| %>
+    
     <% if user_signed_in? %>
       <% user = current_user %>
       <b>First Name</b><%= form.text_field :first_name, required: true, class: 'form-control', value:user.first_name %>
@@ -13,6 +14,7 @@
       </div>
   <%end%>
 </div>
+
 <div class="grouping_button">
   <div class="btn-group">
     <button id="l"><%= link_to "Change password", edit_user_registration_path %></button>

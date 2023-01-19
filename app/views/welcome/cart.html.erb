@@ -1,10 +1,8 @@
-
+<% if @cart.product.present? %>
 	<section id="cart_items">
 		<div class="container">
 			<div class="table-responsive cart_info">
-      
 				<table class="table table-condensed">
-
 					<thead>
 						<tr class="cart_menu">
 							<td class="image">Item</td>
@@ -20,7 +18,7 @@
               <tr>
                 <td class="cart_product">
                   <% if product.image.attached? %>
-                    <img src="<%= url_for(product.image) %>">
+                    <img src="<%= url_for(product.image)%>" style="height: 80px; width: 70px;">
                     <% end %>
                     <h3><%= product.name %></h3>
                 </td>
@@ -34,12 +32,12 @@
                 </td>
                 <td class="cart_quantity">
                   <div class="cart_quantity_button">
-                    <%= button_to '+', add_quantity_path(product) , method: :post,  remote: true %>                  
-                      <%= product.quantity %>
-                        <%# turbo_frame_tag %>
-					              <%#= render "products/quantity", quantity: quantity %>
+				  <div style="display:flex;" >
+                    <%= button_to '+', add_quantity_path(product) , method: :post, data: { turbo: true} %>                  
+                    <span style="padding: 5px;">  <%= product.quantity %>  </span>
                     <%= button_to '-', dec_quantity_path(product), method: :post, remote: true, data: { 'turbo-method' => :post } %>
                   </div>
+				  </div>
                 </td>
                 <td class="cart_total">
                    <p>US$ <%= (product.price) * (product.quantity) %></p>
@@ -108,7 +106,11 @@
 			</div>
 		</div>
 	</section><!--/#do_action-->
-
+<% else %>
+	<div style="padding-left: 23%;">
+	<%= image_tag("home/empty_cart1.png", alt: "", class: "girl img-responsive") %>
+	</div>
+<% end %>
 	
 </body>
 </html>

@@ -16,9 +16,11 @@
         <p>City: <%= @address.city%>
         <p>Country: <%= @address.country %></p>
         <p>Zipcode: <%= @address.pincode %></p>
+         <%= radio_button_tag(:address,@address,false) %>
       <% else %>
         <div></div> 
       <%end%>
+       
 		</div>
 
 		<div class="register-req">
@@ -32,24 +34,30 @@
         <div id="my_id", style="display:none">
           <%= form_with model: @address, url: welcome_create_path, method: :post, local: true do |form| %><br>
             <div class="field">
+            <%# binding.pry %>
+  
             
-            <%= form.label :first_Name %>
-            <%= form.text_field :fname %><br>
+          
+            <%= form.label :first_Name%>
+            <%= form.text_field :fname ,type: "text",title: "only letters are allowed", pattern: "[A-Za-z]{1,32}", required: true%><br>
             <%= form.label :Last_Name %>
-            <%= form.text_field :lname %><br>
+            <%= form.text_field :lname ,type: "text",title: "only letters are allowed", pattern: "[A-Za-z]{1,32}",required: true %><br>
             <%= form.label :address_1 %>
-            <%= form.text_field :address_1 %><br>
+            <%= form.text_field :address_1 ,required: true%><br>
             <%= form.label :email_id %>
-            <%= form.email_field :email %><br>
+            <%= form.email_field :email,required: true , style: "margin-left:29px"%><br>
             <%= form.label :pincode %>
-            <%= form.number_field :pincode %>
-            <%= form.select :country, options_for_select( [['India','India'],['Australia','Australia']])%>
-            <%= form.select :city, options_for_select( [['Kalyan','kalyan'],['Dombivali','Dombivali']])%>
+            <%= form.number_field :pincode ,required: true, style: "margin-left:13px",pattern: "[0-9]{6}", type: "text", title: "should be 6 of digits"  %><br>
+            <%= form.label :country %>
+            <%= form.select :country, options_for_select( [['India','India'],['Australia','Australia']])%><br>
+            <%= form.label :city %>
+            <%= form.select :city, options_for_select( [['Kalyan','kalyan'],['Dombivali','Dombivali']])%><br>
+            <%= form.label :state %>
             <%= form.select :state, options_for_select( [['MAHARASHTRA','MAHARASHTRA'],['Bihar','Bihar'],['DELHI','DELHI'],['Uttar pradesh','Uttar pradesh']])%>
             <%= form.label :mobile_no %>
-            <%= form.number_field :mobile_no %>
+            <%= form.number_field :mobile_no , type: "text",pattern: "[1-9]{1}[0-9]{9}",title: "mobile no should be of 10 digits",  required: true%>
             <div class="actions">
-              <%= form.submit %>
+              <%= form.submit id: "l"%>
             </div>
 		      <% end %>
 		    </div>
