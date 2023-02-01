@@ -10,7 +10,7 @@ class UserWishListController < ApplicationController
     if wishlist.save
       redirect_to root_path,  notice: "item  added successfully in wishlist"
     end
-  end
+    end
   end
     
   def create
@@ -22,7 +22,7 @@ class UserWishListController < ApplicationController
 
   def remove_wishlist
     user_id =  current_user.id
-    product_id = params[:id]
+    # product_id = params[:id]
     product = Product.find(params[:id])
     @user_wishlist = UserWishlist.find_by(product_id: product.id)
     if @user_wishlist.destroy

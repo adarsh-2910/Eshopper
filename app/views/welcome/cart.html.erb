@@ -36,7 +36,7 @@
 				  <div style="display:flex;" >
                     <%= button_to '+', add_quantity_path(product) , method: :post, data: { turbo: true} %>                  
                     <span style="padding: 5px;">  <%= product.quantity %>  </span>
-                    <%= button_to '-', dec_quantity_path(product), method: :post, remote: true, data: { 'turbo-method' => :post } %>
+                    <%= button_to '-', dec_quantity_path(product), method: :post, data: { turbo: true} %>
                   </div>
 				  </div>
                 </td>

@@ -8,9 +8,9 @@ class HomeController < ApplicationController
     mailchimp = MailchimpMarketing::Client.new()
     mailchimp.set_config({
       :api_key => "c8653bb20730e6d2db806ec1554c0a27",
-      :server => "us13"                  #datacenter dc
+      :server => "us13"                  
     })
-    list_id = "cdd89c9809"               #uniqueid/audienceid/list_id
+    list_id = "cdd89c9809"               
     response = mailchimp.lists.add_list_member list_id, {
       email_address: params[:email],
       status: "subscribed",

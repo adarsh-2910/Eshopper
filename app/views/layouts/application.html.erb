@@ -13,10 +13,10 @@
   </head>
 
   <body>
-    <% if notice %>
+    <% if notice.present? %>
       <p class="alert alert-success"><%= notice %></p>
     <% end %>
-    <% if alert %>
+    <% if alert.present? %>
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
     <%= render partial: "devise/shared/header"%>

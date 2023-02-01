@@ -112,7 +112,7 @@
 								<div class="single-products">
 										<div class="productinfo text-center">
 											<% if product.image.attached? %>
-												<img src="<%= url_for(product.image) %> "style="height: 180px; width: 200px;" >
+												<%#= link_to product_path(product) do%><img src="<%= url_for(product.image) %> "style="height: 180px; width: 200px;" >
 											<% end %>
 											<h2>USD $<%= product.price %></h2>
 											<p><%= product.name %></p>
@@ -131,15 +131,19 @@
 													<i class="fa fa-heart-o" style="font-size:36px;color:red"></i>
 												<% end %>
 											</div>			
-											</div>          
-										</div>
+                    </div>    
+                  </div>
 								</div>
+
 							</div>
+
 						</div>
 						<%end%>
+              <button style="margin-top:330px;background-color: orange;position: absolute;"><%= link_to ">>", products_show_path %></button>
+            
 					</div><!--features_items-->
 				</div>
 			</div>
 		</div>
-
+  
 	</section>

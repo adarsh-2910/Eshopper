@@ -47,7 +47,6 @@ Rails.application.routes.draw do
   post 'products/:id/add' => "products#add_quantity", as: "add_quantity"
   post 'products/:id/minus' => "products#dec_quantity", as: "dec_quantity"
   
-  
   # Defines the root path route ("/")
   root "welcome#index"
 end

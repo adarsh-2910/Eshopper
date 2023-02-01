@@ -35,11 +35,7 @@ class User < ApplicationRecord
         user.email = data["email"] if user.email.blank?
       end
     end
-  end
-
-  # def admin?
-  #   admin
-  # end   
+  end 
 
   def welcome_send
     UserMailer.welcome_send(self).deliver

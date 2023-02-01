@@ -47,21 +47,21 @@ before_action :authenticate_user! , except: [:index]
       temp = (product.quantity)*(product.price)
       @product_price << temp
     end
-    @value = @product_price.inject {|sum,price| sum + price}  #o/p is in integer
+    @value = @product_price.inject {|sum,price| sum + price}  
     @value =  @value.to_i
     if @value < 500 && @value > 0
       @shipping_cost = 50
     else
       @shipping_cost = 0
     end
-    @final_value = @value + @shipping_cost    #total amount affter adding shipping address 
+    @final_value = @value + @shipping_cost 
     @user = current_user
     
     user_c = UserCoupon.find_by(coupon_code: params[:coupon_code])
       if params[:coupon_code].nil?
         @f_value = @final_value
         @@f_value = @final_value
-      elsif user_c.nil?        #if entered code is invalid
+      elsif user_c.nil?        
         flash.now[:notice] = "Coupon invalid"
       elsif @user.user_coupons.include?(user_c)
         flash.now[:notice] = "already applied!"
@@ -121,6 +121,8 @@ before_action :authenticate_user! , except: [:index]
           order.order_details.create(product_id: product.id, amount:product.price, quantity: product.quantity)
           total = (product.quantity)*(product.price)
           product_price_lists << total
+          product.quantity = 1
+          product.save
         end
       else
         UserMailer.send_order_details(current_user,order).deliver
@@ -160,13 +162,13 @@ before_action :authenticate_user! , except: [:index]
     id = params[:user_order_id].to_i
 		if (order.ids).include?(id) 
       @user_order = UserOrder.find_by(id: id)
-    elsif id != 0 && (order.ids).include?(id) == false   #if we convert nil to integer we get 0 so wrote 0 instead of nil
+    elsif id != 0 && (order.ids).include?(id) == false  #if we convert nil to integer we get 0 so wrote 0 instead of nil
       flash[:alert] = "incorrect order id"
     end
   end  
 
   def order
-    @orders = current_user.user_orders.all      #current_user.user_orders
+    @orders = current_user.user_orders.all 
   end  
   
   def product_details
@@ -199,7 +201,7 @@ before_action :authenticate_user! , except: [:index]
   end
 
   private
-  def address_params   #used in User_address
+  def address_params
     params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
   end
   #require(:address)
