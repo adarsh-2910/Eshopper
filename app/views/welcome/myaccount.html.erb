@@ -2,12 +2,12 @@
   <h1 id="l" style=" padding: 14px; padding-left: 35px;"> Edit Account</h1>
   <%= form_with model: @users, url: profile_update_path,method: :post, local: true do |form| %>
     
-    <% if user_signed_in? %>
+  <% if user_signed_in? %>
       <% user = current_user %>
-      <b>First Name</b><%= form.text_field :first_name, required: true, class: 'form-control', value:user.first_name %>
-      <b>Last Name</b><%= form.text_field :last_name, required: true, class: 'form-control', value:user.last_name %>
-      <b>Mobile no.</b><%= form.text_field :mobile_number, required: true, class: 'form-control', value:user.mobile_number %>
-      <b>Email</b><%= form.text_field :email, required: true, class: 'form-control', value:user.email %></li>
+      <b>First Name</b><%= form.text_field :first_name, type: "text",title: "only letters are allowed", pattern: "[A-Za-z]{1,32}",required: true, class: 'form-control', value:user.first_name %>
+      <b>Last Name</b><%= form.text_field :last_name,type: "text",title: "only letters are allowed", pattern: "[A-Za-z]{1,32}", required: true, class: 'form-control', value:user.last_name %>
+      <b>Mobile no.</b><%= form.text_field :mobile_number, type: "text",pattern: "[1-9]{1}[0-9]{9}",title: "Enter 10 digits valid mobile no.", required: true, class: 'form-control', value:user.mobile_number %>
+      <b>Email</b><%= form.text_field :email, type: "text", pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$", required: true, class: 'form-control', value:user.email %></li>
       <% end %><br>
       <div class="actions">
         <%= form.submit value = "UPDATE" %>

@@ -20,7 +20,7 @@
 					<%= form.text_field :name, class:"form-control",placeholder:"Name", value: ""%><br>
           <%= form.text_field :email, class:"form-control",placeholder:"Email" %><br>
 			    <%= form.number_field :contact_no, class:"form-control",placeholder:"Contact Number", pattern: "[1-9]{1}[0-9]{9}" %><br>
-          <%= form.text_area :message, class:"form-control",placeholder:"Write msg to admin" , type: "text",pattern: "[1-9]{1}[0-9]{9}",title: "mobile no should be of 10 digits",  required: true%>
+          <%= form.text_area :message, class:"form-control",placeholder:"Write msg to admin" %>
 					
 					<div class="btn btn-primary">
     			<%= form.submit "send" %>

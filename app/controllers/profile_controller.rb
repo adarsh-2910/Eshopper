@@ -1,8 +1,8 @@
 class ProfileController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   def update
+    @user.update(user_params)
     respond_to do |format|
-    @user = User.all
       if @user.update(user_params)
         format.html { redirect_to welcome_myaccount_path, notice: "user was successfully updated." }
         format.json { render :show, status: :ok, location: @user }

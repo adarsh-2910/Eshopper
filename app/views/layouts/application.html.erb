@@ -13,13 +13,13 @@
   </head>
 
   <body>
+    <%= render partial: "devise/shared/header"%>
     <% if notice.present? %>
-      <p class="alert alert-success"><%= notice %></p>
+      <p class="alert alert-success" style="padding-top: 185px;"><%= notice %></p>
     <% end %>
     <% if alert.present? %>
-      <p class="alert alert-danger"><%= alert %></p>
+      <p class="alert alert-danger" style="padding-top: 185px;"><%= alert %></p>
     <% end %>
-    <%= render partial: "devise/shared/header"%>
     <%= yield %>
     <footer id="footer"><!--Footer-->
 		 <%= render partial: "devise/shared/footer"%>

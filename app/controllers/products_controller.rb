@@ -3,13 +3,16 @@ class ProductsController < ApplicationController
   def add_to_cart          
     id = params[:id].to_i   #finding product id
     session[:cart] << id unless session[:cart].include?(id)  #adding product to cart unless it is already present in shopping cart
-    redirect_to root_path, notice: "Product is added to cart"
+    redirect_to request.referrer, notice: "Product is added to cart"
   end
 
   def remove_from_cart
     id = params[:id].to_i
     session[:cart].delete(id)
-    redirect_to root_path, notice: "Product removed from the cart"
+    @product = Product.find(params[:id])
+    @product.quantity = 1
+    @product.save
+    redirect_to welcome_cart_path, notice: "Product removed from the cart"
   end
 
   def index
@@ -18,26 +21,28 @@ class ProductsController < ApplicationController
 
   def add_quantity
     @item = Product.find(params[:id])
-    @item.quantity += 1
-    @item.save
     
-    respond_to do |format|
+      @item.quantity += 1
+      @item.save
+      respond_to do |format|
       format.js   
-    end
+      end
   end
 
   def dec_quantity
     @item = Product.find(params[:id])
-    @item.quantity -= 1
-    @item.save
-    
-    respond_to do |format|
-      format.js { render :layout => false }
-    end
+    if @item.quantity < 2
+      remove_from_cart
+    else
+      @item.quantity -= 1
+      @item.save
+      respond_to do |format|
+        format.js { render :layout => false }
+      end
+    end  
   end
 
   def wishlist 
-    @wish = current_user.user_wishlists.all   
   end
 
   def show

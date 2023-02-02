@@ -9,10 +9,6 @@ before_action :authenticate_user! , except: [:index]
     @cms = Cm.all
   end    
 
-  def wishlist
-    @wishlist = current_user.user_wishlists.all
-  end  
-
   def create
     @address = current_user.addresses.new(address_params)
     if @address.save
@@ -65,6 +61,7 @@ before_action :authenticate_user! , except: [:index]
         flash.now[:notice] = "Coupon invalid"
       elsif @user.user_coupons.include?(user_c)
         flash.now[:notice] = "already applied!"
+        # binding.pry
       else
         user_c.no_of_uses += 1
         @user.user_coupons << user_c
@@ -114,7 +111,7 @@ before_action :authenticate_user! , except: [:index]
       end
 
       addresses = current_user.addresses.last
-      
+      # binding.pry
       order = UserOrder.create(user_id: current_user.id,address_id: addresses.id, grand_total: amount,payment_gateway_id: payment_gateway, transaction_id: trans_id )
       if order.save
         products.each do |product|
@@ -130,23 +127,7 @@ before_action :authenticate_user! , except: [:index]
       end
     end
   
-  def contact
-    @contact=ContactU.new
-    @cont = current_user.contact_us.last
-  end
-
-  def contact_us
-    @user= current_user
-    @contact= @user.contact_us.new(contact_params)
-    @cont = ContactU.last
-    if @contact.save
-      redirect_to welcome_contact_path, notice: "Contacted to Eshopper's admin"
-    else
-      flash.now[:error] = "failed"
-      render:contact
-    end
-  end
-
+  
   def cod
     @@trans = 1
     checkout_product
@@ -169,6 +150,7 @@ before_action :authenticate_user! , except: [:index]
 
   def order
     @orders = current_user.user_orders.all 
+    # binding.pry
   end  
   
   def product_details
@@ -202,7 +184,7 @@ before_action :authenticate_user! , except: [:index]
 
   private
   def address_params
-    params.require(:address).permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
+    params.permit(:address_1,:pincode, :mobile_no, :country, :city, :state)
   end
   #require(:address)
   def contact_params

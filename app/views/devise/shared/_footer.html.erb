@@ -73,7 +73,7 @@
 							<%# <img src="images/home/map.png" alt="" /> %>
 							<div class="single-widget">
 							<%if user_signed_in? && current_user.addresses.present? %>
-								<%= form_with url: mailchimp_path,  local: true do |form| %>
+								<%= form_with url: mailchimp_home_index_path,  local: true do |form| %>
 									<%= form.hidden_field :email, :value=> current_user.email %>
 									<%= form.hidden_field :fname, :value=> current_user.first_name %>
 									<%= form.hidden_field :lname, :value=>current_user.last_name %>

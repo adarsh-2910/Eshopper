@@ -36,7 +36,7 @@
 				  <div style="display:flex;" >
                     <%= button_to '+', add_quantity_path(product) , method: :post, data: { turbo: true} %>                  
                     <span style="padding: 5px;">  <%= product.quantity %>  </span>
-                    <%= button_to '-', dec_quantity_path(product), method: :post, data: { turbo: true} %>
+                    <%= button_to '-', dec_quantity_path(product), method: :post, data: { turbo: true, confirm: "Are you sure you want to delete this?"} %>
                   </div>
 				  </div>
                 </td>
@@ -78,7 +78,7 @@
 											<div class="mb-3">
 												<%= form.submit "Apply", class: "btn btn-primary" %>
 											</div>
-                    </li>
+                    					</li>
 									</ul>
 								<% end %>
 							</li>
@@ -94,13 +94,15 @@
 							<%end%>
 							<% if @f_value.present? %>
 								<li>Total <span><%= @f_value %></span><span>US$<span>
+							<% else %>
+								<li>Total <span><%= @final_value %></span><span>US$<span>
 							<% end %>
 						</ul>
 						<%if @f_value == 0 %>
-								<br><h6 style="color:red"><%= "No products in the cart" %></h6>
-							<%else%>
-								<span class="btn btn-default check_out" href=""><%= link_to "Checkout", welcome_checkout_path %> </span>
-							<%end%>
+							<br><h6 style="color:red"><%= "No products in the cart" %></h6>
+						<%else%>
+							<span class="btn btn-default check_out" href=""><%= link_to "Checkout", welcome_checkout_path %> </span>
+						<%end%>
 						<%# <a href="checkout.html", style="padding: 40px;"><i class="fa fa-shopping-cart"></i> Checkout</a> %>
 					</div>
 				</div>

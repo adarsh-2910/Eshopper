@@ -1,9 +1,17 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  get 'home/index'
   mount RailsAdmin::Engine => '//admin', as: 'rails_admin'
+  root 'home#index'
+  resources :home, only: [:index] do
+    collection do
+      post 'mailchimp'
+    end
+  end
+
+  resources :contact, only: [:index, :create]
+  resources :wishlist, only: [:index, :create, :destroy]
+
   
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "welcome/index"
   get "welcome/blog"
   get "welcome/blog_single"
@@ -17,7 +25,7 @@ Rails.application.routes.draw do
   get "welcome/order", to: 'welcome#order'
   get "products/show"
 
-  post 'home/mailchimp', to:'home#mailchimp', as: 'mailchimp'
+  # post 'home/mailchimp', to:'home#mailchimp', as: 'mailchimp'
 
   get 'welcome/product_details/:id', to: 'welcome#product_details', as: 'product_details'
   post 'welcome/create',to: 'welcome#create'
@@ -41,12 +49,12 @@ Rails.application.routes.draw do
   delete 'products/remove_product/:id', to: "products#remove_product", as: "remove_product"
 
   post '/new/:id', to: "user_wish_list#new", as: "new"
-  delete "user_wish_list/remove_wishlist/:id", to:  "user_wish_list#remove_wishlist", as: "remove_wishlist"
-  get'products/wishlist'
+  # delete "user_wish_list/remove_wishlist/:id", to:  "user_wish_list#remove_wishlist", as: "remove_wishlist"
+  # get'products/wishlist'
 
   post 'products/:id/add' => "products#add_quantity", as: "add_quantity"
   post 'products/:id/minus' => "products#dec_quantity", as: "dec_quantity"
   
   # Defines the root path route ("/")
-  root "welcome#index"
+  # root "home#index"
 end

@@ -53,21 +53,20 @@
 								<ul class="nav navbar-nav">
 
 
-										<li class="dropdown"><%= link_to "Account", welcome_myaccount_path %>
+										<li class="dropdown"><%= link_to "Account"%>
 										<ul role="menu" class="sub-menu">
 											<li  style="color:red;"><%= link_to "My order", welcome_order_path,:class=>"subaccount" %></li><br>
 											<li><%= link_to "Track Order", welcome_track_path,:class=>"subaccount" %></li>
+											<li><%= link_to "Edit account", welcome_myaccount_path,:class=>"subaccount" %></li>
 										</ul>
 										</li> 
 
-			
-
-									<li><%= link_to products_wishlist_path do %>
-										<i class="fa fa-heart-o" style="font-size:36px;color:red"></i>
+									<li><%= link_to wishlist_index_path do %>
+										<i class="fa fa-heart-o" style="font-size:22px;color:red"></i>
 									<% end %></li>
 
 									<li><%= link_to welcome_cart_path do %>
-										<i class="fa fa-shopping-cart" style="font-size:36px"></i>
+										<i class="fa fa-shopping-cart" style="font-size:22px">(<%= @cart.size %>)</i>
 									<% end %></li>
 
 									<li><%= link_to "Sign in", new_user_session_path unless user_signed_in? %></li>
@@ -92,9 +91,9 @@
 							<div class="mainmenu pull-left">
 								<ul class="nav navbar-nav collapse navbar-collapse">
 							<% if user_signed_in?%>
-								<li><%= link_to "Home", welcome_index_path %></li>
+								<li><%= link_to "Home", home_index_path %></li>
 								<li><%= link_to "Products", products_show_path %></li>
-								<li><%= link_to "Contact", welcome_contact_path %></li>
+								<li><%= link_to "Contact", contact_index_path %></li>
 								</ul>
 							<% end %>  
 							</div>

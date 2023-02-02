@@ -2,6 +2,10 @@ class HomeController < ApplicationController
   require "MailchimpMarketing"
   skip_before_action :authenticate_user!
   def index
+    @feature_products = Product.all rescue nil 
+    @category = Category.where(parent_id: nil)  
+    @baner = Baner.all
+    @cms = Cm.all
   end
 
   def mailchimp
@@ -25,10 +29,10 @@ class HomeController < ApplicationController
         },
       },
     }
-  flash.now[:notice] = "Subscribed"
-  rescue MailchimpMarketing::ApiError => e
-  flash[:notice] = "user allready exists"
-  puts "Error: #{e}"
+  # flash.now[:notice] = "Subscribed"
+  # rescue MailchimpMarketing::ApiError => e
+  # flash[:notice] = "user already exists"
+  # puts "Error: #{e}"
 
   end
 end

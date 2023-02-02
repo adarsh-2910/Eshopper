@@ -42,7 +42,7 @@
 }
 
 .fix{
-  padding-top: 200px;
+  padding-top: 180px;
 }
 
 .thumbnaill{
@@ -2674,4 +2674,7 @@ h2.title {
   color: #FE980F;
 }
 
-
+/* manualy added css */
+.inline-block{
+  display: inline-block;
+}

@@ -34,9 +34,6 @@
         <div id="my_id", style="display:none">
           <%= form_with model: @address, url: welcome_create_path, method: :post, local: true do |form| %><br>
             <div class="field">
-            <%# binding.pry %>
-  
-            
           
             <%= form.label :first_Name%>
             <%= form.text_field :fname ,type: "text",title: "only letters are allowed", pattern: "[A-Za-z]{1,32}", required: true%><br>
@@ -62,16 +59,17 @@
 		      <% end %>
 		    </div>
 		</div>
-
-		<div class="review-payment">
-		  <h2>Review & Payment</h2>
-		</div>
-		<span>
-		  <h4>Pay with Stripe<%= button_to "Stripe Pay", welcome_stripe_path, method: :get %></h4>
-		</span>
-		<span>
-		  <h4>Pay on COD<%= button_to "COD", welcome_cod_path, method: :get %>
-		</span>
+    <% if current_user.addresses.present? %>
+      <div class="review-payment">
+        <h2>Review & Payment</h2>
+      </div>
+      <span>
+        <h4>Pay with Stripe<%= button_to "Stripe Pay", welcome_stripe_path, method: :get %></h4>
+      </span>
+      <span>
+        <h4>Pay on COD<%= button_to "COD", welcome_cod_path, method: :get %>
+      </span>
+    <% end %>  
 	</div> 
 </section> <!--/#cart_items-->
 

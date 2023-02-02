@@ -19,7 +19,7 @@ class User < ApplicationRecord
   #validations
   validates :first_name, format: { with: /\A[a-zA-Z]+\z/,message: "only letters are allowed" }
   validates :last_name, format: { with: /\A[a-zA-Z]+\z/,message: "only letters are allowed" }
-  validates :email, presence: { message: 'email field cannot be empty' }
+  validates :email, format: {with: /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/, message: "enter valid email"}
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user| #created record only if table is empty

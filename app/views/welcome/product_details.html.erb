@@ -24,14 +24,18 @@
 								<%# <img src="images/product_details/rating.png" alt="" /> %>
 								<span>
 									
-										<span style="margin-left: -88px;">US$ <%= product.price%></span>
+									<span style="margin-left: -88px;">US$ <%= product.price%></span>
 									
-									<% if @cart.include?(product) %>
-                          <%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete , id: "l" %>
-                        <% else %>
-                          <%= button_to "Add to cart", add_to_cart_path(product), id: "l" %>
-                        <% end %>
-						<%= button_to "Add to wishlist", new_path(product), id: "l" %>
+									<%# <div style="display:flex;"> %>
+										
+								<div class="inline-block">
+									<%= button_to add_to_cart_path(product) do %>
+										<i class="fa fa-shopping-cart" style="font-size:25px"></i>
+									<% end %>
+									<%= button_to wishlist_index_path(id: product) do %>
+										<i class="fa fa-heart-o" style="font-size:25px;color:red"></i>
+									<% end %>
+								</div>
 								</span>
 								<p><b>Availability:</b> In Stock</p>
 								<p><b>Condition:</b> New</p>

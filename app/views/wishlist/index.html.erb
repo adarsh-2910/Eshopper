@@ -1,0 +1,66 @@
+<section class="fix">
+<% if @wish.present?%>
+	<section id="cart_items">
+		<div class="container ">
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Product Image</td>
+							<td class="image">Product Name</td>
+							<td class="price">Product Price</td>
+							<td class="price">Remove from wishlist</td>
+						</tr>
+					</thead>
+          <%# @cart.each do |product| %>
+                    <% @wish.each do |wishlist| %>
+                        <% product = wishlist.product %>
+                        <tbody>
+                            <tr>
+                            <td class="cart_product">
+                                <img src="<%= url_for(product.image) %>"style="height: 80px; width: 70px;">
+                            </td>
+                            <td class="cart_description">
+                                <h3><%= product.name %></h3> 
+                            </td>
+                            <td class="cart_price">
+                                <b>US$ <%= product.price %></b>
+                            </td>
+                            <td class="cart_price">
+                                <%= button_to "X", wishlist_path(product), method: :delete %>
+                            </td>
+                            </tr>
+                        </tbody>
+                    <% end %>  
+                </table> 
+			</div>
+		</div>
+        <% else %>
+	
+	</section> <!--/#cart_items-->
+    <div style="padding-left: 39%;margin-bottom: 85px;">
+	<%= image_tag("home/empty_wishlist.png", alt: "", class: "girl img-responsive") %>
+	</div>
+<% end %>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
